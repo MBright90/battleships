@@ -1,1 +1,7 @@
-module.exports = 'This is a working test'
+class Umpire {
+  constructor() {
+    this.score = 0
+  }
+}
+
+module.exports = Umpire
