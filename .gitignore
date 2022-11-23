@@ -4,5 +4,6 @@
 .babelrc
 .eslint*
 .prettier*
+jest*
 
 *ignore
