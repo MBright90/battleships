@@ -1,7 +1,5 @@
-class Umpire {
+export default class Umpire {
   constructor() {
     this.score = 0
   }
 }
-
-module.exports = Umpire
