@@ -1,0 +1,7 @@
+html, * a {
+    border: none;
+    color: inherit;
+    margin: none;
+    text-decoration: none;
+    user-select: none;
+}
