@@ -6,13 +6,15 @@ const dom = (() => {
     return element
   }
 
+  // HTMLElement.appendChildren
   HTMLElement.prototype.appendChildren = function appendChildren(...children) {
     children.forEach((child) => this.appendChild(child))
   }
 
+  // HTMLElement.setAttributes
   // Parses an array of attributes where each attribute is a key/value object
   HTMLElement.prototype.setAttributes = function setAttributes(...attributes) {
-    attributes.forEach((attribute) => )
+    Object.keys(attributes).forEach((key) => this.setAttribute(key, attributes[key]))
   }
 
   // Initial page creation
