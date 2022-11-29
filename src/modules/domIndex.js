@@ -4,7 +4,7 @@ const dom = (() => {
   // ***************** //
   function createClassElement(newElement, ...classes) {
     const element = document.createElement(newElement)
-    classes.forEach((className) => element.classlist.add(className))
+    classes.forEach((className) => element.classList.add(className))
     return element
   }
 
