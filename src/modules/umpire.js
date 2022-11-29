@@ -1,6 +1,7 @@
 class Umpire {
-  constructor() {
+  constructor(opponent) {
     this.score = 0
+    this.opponent = opponent || 'ai'
   }
 }
 
