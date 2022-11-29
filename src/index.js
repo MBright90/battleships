@@ -1,4 +1,4 @@
 import './style/style.css'
-import dom from './domModules/domIndex'
+import dom from './modules/domIndex'
 
 console.log(dom)
