@@ -22,6 +22,7 @@ const dom = (() => {
   // Parses an array of attributes where each attribute is a key/value object
   function setAttributes(element, attributes) {
     Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]))
+    return element
   }
 
   // *************************** //
@@ -51,6 +52,43 @@ const dom = (() => {
     return boardWrapper
   }
 
+  function createBoards() {
+    const main = document.querySelector('main')
+    main.childNodes.forEach((node) => node.remove())
+    appendChildren(
+      main,
+      newBoard('player-one-board'),
+      newBoard('player-two-board'),
+    )
+  }
+
+  // function placeShip(shipSize, direction, sizeQueue) { if (sizeQueue.length == 0) return }
+
+  // **************** //
+  // Dom manipulation //
+  // **************** //
+
+  function createOppositionChoices() {
+    const createChoiceButton = (choice) => {
+      const button = createTextElement('button', choice)
+      return button
+    }
+
+    const choicesContainer = createClassElement('div', 'choices-container')
+    const choicesPrompt = createTextElement('p', 'Choose Your Opponent')
+    const choicesButtonContainer = createClassElement('div', 'choices-buttons-container')
+    appendChildren(
+      choicesButtonContainer,
+      createChoiceButton('Player'),
+      createChoiceButton('AI'),
+    )
+    return appendChildren(
+      choicesContainer,
+      choicesPrompt,
+      choicesButtonContainer,
+    )
+  }
+
   // ********************* //
   // Initial page creation //
   // ********************* //
@@ -65,11 +103,7 @@ const dom = (() => {
 
     // Create main
     const main = document.createElement('main')
-    appendChildren(
-      main,
-      newBoard('player-one'),
-      newBoard('player-two'),
-    )
+    main.appendChild(createOppositionChoices())
 
     // Create footer
     const footer = document.createElement('footer')
@@ -87,7 +121,10 @@ const dom = (() => {
     return layoutWrapper
   }
 
-  return initPage
+  return {
+    initPage,
+    createBoards,
+  }
 })()
 
-export default { dom }
+export default dom
