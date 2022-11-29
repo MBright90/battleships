@@ -14,15 +14,14 @@ const dom = (() => {
     return element
   }
 
-  // HTMLElement.appendChildren
-  HTMLElement.prototype.appendChildren = function appendChildren(...children) {
-    children.forEach((child) => this.appendChild(child))
+  function appendChildren(element, ...children) {
+    children.forEach((child) => element.appendChild(child))
+    return element
   }
 
-  // HTMLElement.setAttributes
   // Parses an array of attributes where each attribute is a key/value object
-  HTMLElement.prototype.setAttributes = function setAttributes(...attributes) {
-    Object.keys(attributes).forEach((key) => this.setAttribute(key, attributes[key]))
+  function setAttributes(element, attributes) {
+    Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]))
   }
 
   // *************************** //
@@ -34,10 +33,14 @@ const dom = (() => {
       const currentRow = document.createElement('div')
       currentRow.classList.add('row')
       for (let i = 1; i <= this.boardLengthHeight; i += 1) {
-        const boardCell = document.createElement('div')
-        boardCell.classList.add('cell')
-        boardCell.dataset.xPos = i
-        boardCell.dataset.yPos = rowNumber
+        const boardCell = createClassElement('div', 'cell')
+        setAttributes(
+          boardCell,
+          [
+            { 'dataset-x-pos': i },
+            { 'dataset-y-pos': rowNumber },
+          ],
+        )
         currentRow.appendChild(boardCell)
       }
       return currentRow
@@ -62,7 +65,8 @@ const dom = (() => {
 
     // Create main
     const main = document.createElement('main')
-    main.appendChildren(
+    appendChildren(
+      main,
       newBoard('player-one'),
       newBoard('player-two'),
     )
@@ -74,7 +78,8 @@ const dom = (() => {
     )
 
     // Append all to layout wrapper
-    layoutWrapper.appendChildren(
+    appendChildren(
+      layoutWrapper,
       header,
       main,
       footer,
