@@ -25,36 +25,64 @@ const dom = (() => {
     Object.keys(attributes).forEach((key) => this.setAttribute(key, attributes[key]))
   }
 
+  // *************************** //
+  // Board creation/manipulation //
+  // *************************** //
+
+  function newBoard(boardClassName) {
+    const boardRow = (rowNumber) => {
+      const currentRow = document.createElement('div')
+      currentRow.classList.add('row')
+      for (let i = 1; i <= this.boardLengthHeight; i += 1) {
+        const boardCell = document.createElement('div')
+        boardCell.classList.add('cell')
+        boardCell.dataset.xPos = i
+        boardCell.dataset.yPos = rowNumber
+        currentRow.appendChild(boardCell)
+      }
+      return currentRow
+    }
+
+    const boardWrapper = document.createElement('div', 'game-board', boardClassName)
+    for (let i = 1; i <= this.boardLengthHeight; i += 1) boardWrapper.appendChild(boardRow(i))
+    return boardWrapper
+  }
+
   // ********************* //
   // Initial page creation //
   // ********************* //
 
-  const layoutWrapper = createClassElement('div', 'layout-wrapper')
+  function initPage() {
+    const layoutWrapper = createClassElement('div', 'layout-wrapper')
 
-  // Create header
-  const header = document.createElement('header')
-  const headerTitle = createTextElement('h1', 'Battleships')
-  header.appendChild(headerTitle)
+    // Create header
+    const header = document.createElement('header')
+    const headerTitle = createTextElement('h1', 'Battleships')
+    header.appendChild(headerTitle)
 
-  // Create main
-  const main = document.createElement('main')
-  main.appendChildren(
-    createClassElement('div', 'player-board'),
-    createClassElement('div', 'opponent-board'),
-  )
+    // Create main
+    const main = document.createElement('main')
+    main.appendChildren(
+      newBoard('player-one'),
+      newBoard('player-two'),
+    )
 
-  // Create footer
-  const footer = document.createElement('footer')
-  footer.appendChild(
-    createTextElement('p', 'MBright90'),
-  )
+    // Create footer
+    const footer = document.createElement('footer')
+    footer.appendChild(
+      createTextElement('p', 'MBright90'),
+    )
 
-  // Append all layout wrapper
-  layoutWrapper.appendChildren(
-    header,
-    main,
-    footer,
-  )
+    // Append all to layout wrapper
+    layoutWrapper.appendChildren(
+      header,
+      main,
+      footer,
+    )
+    return layoutWrapper
+  }
+
+  return initPage
 })()
 
 export default { dom }
