@@ -7,11 +7,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Battleships',
+      favicon: './src/assets/images/favicon.ico',
     }),
   ],
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   module: {
     rules: [
