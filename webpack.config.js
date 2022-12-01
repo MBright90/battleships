@@ -8,13 +8,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Battleships',
-      favicon: './src/assets/images/favicon.ico',
+      favicon: './src/assets/images/favicon/favicon.ico',
     }),
     new CopyPlugin({
       patterns: [
         {
           from: 'src/assets/images/favicon',
-          to: 'dist/assets/images/favicon',
+          to: 'assets/images/favicon',
         },
       ],
     }),
