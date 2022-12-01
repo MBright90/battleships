@@ -10,19 +10,13 @@ document.body.appendChild(dom.initPage())
 function gameSetupListeners() {
   const buttons = document.querySelectorAll('.choices-container button')
 
-  buttons.forEach((button) => {
-    if (button.textContent === 'Player') {
-      button.addEventListener('click', () => {
-        console.log('clicked player')
-        buttons.forEach((choiceButton) => choiceButton.remove())
-      })
-    } else {
-      button.addEventListener('click', () => {
-        console.log('clicked ai')
-        buttons.forEach((choiceButton) => choiceButton.remove())
-      })
-    }
-  })
+  const setupButtonCallback = (event) => {
+    console.log(`clicked ${event.target.textContent}`)
+    buttons.forEach((button) => button.remove())
+    dom.createBoards()
+  }
+
+  buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
 }
 
 gameSetupListeners()
