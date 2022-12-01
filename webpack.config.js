@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -8,6 +9,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Battleships',
       favicon: './src/assets/images/favicon.ico',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/assets/images/favicon',
+          to: 'dist/assets/images/favicon',
+        },
+      ],
     }),
   ],
   output: {
