@@ -29,11 +29,11 @@ const dom = (() => {
   // Board creation/manipulation //
   // *************************** //
 
-  function newBoard(boardClassName) {
+  function newBoard(boardClassName, size) {
     const boardRow = (rowNumber) => {
       const currentRow = document.createElement('div')
       currentRow.classList.add('row')
-      for (let i = 1; i <= this.boardLengthHeight; i += 1) {
+      for (let i = 1; i <= size; i += 1) {
         const boardCell = createClassElement('div', 'cell')
         setAttributes(
           boardCell,
@@ -48,7 +48,7 @@ const dom = (() => {
     }
 
     const boardWrapper = document.createElement('div', 'game-board', boardClassName)
-    for (let i = 1; i <= this.boardLengthHeight; i += 1) boardWrapper.appendChild(boardRow(i))
+    for (let i = 1; i <= size; i += 1) boardWrapper.appendChild(boardRow(i))
     return boardWrapper
   }
 
@@ -57,8 +57,8 @@ const dom = (() => {
     main.childNodes.forEach((node) => node.remove())
     appendChildren(
       main,
-      newBoard('player-one-board'),
-      newBoard('player-two-board'),
+      newBoard('player-one-board', 10),
+      newBoard('player-two-board', 10),
     )
   }
 
@@ -87,6 +87,10 @@ const dom = (() => {
       choicesPrompt,
       choicesButtonContainer,
     )
+  }
+
+  function removeElements(...elements) {
+    elements.forEach((element) => element.remove())
   }
 
   // ********************* //
@@ -124,6 +128,8 @@ const dom = (() => {
   return {
     initPage,
     createBoards,
+
+    removeElements,
   }
 })()
 
