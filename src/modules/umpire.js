@@ -4,6 +4,10 @@ class Umpire {
     this.opponent = opponent || 'ai'
   }
 
+  setOpponent(opponent) {
+    this.opponent = opponent
+  }
+
   setUpGame() {
     // Place logic for choosing ship spaces
   }
