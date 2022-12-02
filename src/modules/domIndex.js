@@ -21,7 +21,9 @@ const dom = (() => {
 
   // Parses an array of attributes where each attribute is a key/value object
   function setAttributes(element, attributes) {
-    Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]))
+    attributes.forEach((object) => {
+      Object.keys(object).forEach((key) => element.setAttribute(key, object[key]))
+    })
     return element
   }
 
@@ -47,7 +49,7 @@ const dom = (() => {
       return currentRow
     }
 
-    const boardWrapper = document.createElement('div', 'game-board', boardClassName)
+    const boardWrapper = createClassElement('div', 'game-board', boardClassName)
     for (let i = 1; i <= size; i += 1) boardWrapper.appendChild(boardRow(i))
     return boardWrapper
   }
