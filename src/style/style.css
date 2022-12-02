@@ -26,3 +26,8 @@ header {
     gap: 30px;
     margin: 10px;
 }
+
+footer {
+    position: absolute;
+    bottom: 5px;
+}
