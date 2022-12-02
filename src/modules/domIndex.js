@@ -71,6 +71,7 @@ const dom = (() => {
   function createOppositionChoices() {
     const createChoiceButton = (choice) => {
       const button = createTextElement('button', choice)
+      button.dataset.choice = choice
       return button
     }
 

@@ -11,7 +11,7 @@ function gameSetupListeners() {
   const buttons = document.querySelectorAll('.choices-container button')
 
   const setupButtonCallback = (event) => {
-    console.log(`clicked ${event.target.textContent}`)
+    console.log(`clicked ${event.target.dataset.choice}`)
     buttons.forEach((button) => button.remove())
     dom.createBoards()
   }
