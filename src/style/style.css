@@ -1,10 +1,15 @@
 html, *, a {
     border: none;
+    box-sizing: border-box;
     color: inherit;
     margin: 0;
     text-decoration: none;
     user-select: none;
 }
+
+/*************************/
+/* Initial layout styles */
+/*************************/
 
 .layout-wrapper {
     align-items: center;
@@ -30,4 +35,14 @@ header {
 footer {
     position: absolute;
     bottom: 5px;
+}
+
+/*********************/
+/* Game board styles */
+/*********************/
+
+.game-board .cell {
+    border: blue;
+    height: 10px;
+    width: 10px
 }
