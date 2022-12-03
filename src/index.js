@@ -22,4 +22,8 @@ function gameSetupListeners() {
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
 }
 
+function addBoardHover(boardName) {
+  const boardCells = document.querySelectorAll(`${boardName}`)
+}
+
 gameSetupListeners()
