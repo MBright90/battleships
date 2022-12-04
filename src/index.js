@@ -13,17 +13,13 @@ function gameSetupListeners() {
   const buttons = document.querySelectorAll('.choices-container button')
 
   const setupButtonCallback = (event) => {
-    console.log(`clicked ${event.target.dataset.choice}`)
     buttons.forEach((button) => button.remove())
-    umpire.setOpponent(event.target.dataset.choice)
+    umpire.setOpponent(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
+    dom.addBoardHover('player-one-board')
   }
 
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
-}
-
-function addBoardHover(boardName) {
-  const boardCells = document.querySelectorAll(`${boardName}`)
 }
 
 gameSetupListeners()
