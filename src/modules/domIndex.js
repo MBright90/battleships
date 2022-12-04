@@ -64,6 +64,13 @@ const dom = (() => {
     )
   }
 
+  function addBoardHover(boardName) {
+    const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+    boardCells.forEach((cell) => {
+      cell.style.backgroundColor = '#eedefe'
+    })
+  }
+
   // function placeShip(shipSize, direction, sizeQueue) { if (sizeQueue.length == 0) return }
 
   // **************** //
@@ -130,7 +137,9 @@ const dom = (() => {
 
   return {
     initPage,
+
     createBoards,
+    addBoardHover,
 
     removeElements,
   }
