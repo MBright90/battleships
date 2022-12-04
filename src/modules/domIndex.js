@@ -64,11 +64,9 @@ const dom = (() => {
     )
   }
 
-  function addBoardHover(boardName) {
-    const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-    boardCells.forEach((cell) => {
-      cell.style.backgroundColor = '#eedefe'
-    })
+  function boardHoverCallback(event) {
+    if (!event.target.style.backgroundColor) event.target.style.backgroundColor = 'red'
+    else event.target.style.backgroundColor = ''
   }
 
   // function placeShip(shipSize, direction, sizeQueue) { if (sizeQueue.length == 0) return }
@@ -139,7 +137,7 @@ const dom = (() => {
     initPage,
 
     createBoards,
-    addBoardHover,
+    boardHoverCallback,
 
     removeElements,
   }
