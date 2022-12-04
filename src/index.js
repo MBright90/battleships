@@ -9,6 +9,18 @@ const umpire = new Umpire('player')
 // Listener functions //
 // ****************** //
 
+function addHoverListeners(boardName) {
+  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+  boardCells.forEach((cell) => cell.addEventListener('mouseover', dom.boardHoverCallback))
+  boardCells.forEach((cell) => cell.addEventListener('mouseout', dom.boardHoverCallback))
+}
+
+function removeHoverListeners(boardName) {
+  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+  boardCells.forEach((cell) => cell.removeEventListener('mouseover', dom.boardHoverCallback))
+  boardCells.forEach((cell) => cell.removeEventListener('mouseout', dom.boardHoverCallback))
+}
+
 function gameSetupListeners() {
   const buttons = document.querySelectorAll('.choices-container button')
 
@@ -16,7 +28,7 @@ function gameSetupListeners() {
     buttons.forEach((button) => button.remove())
     umpire.setOpponent(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
-    dom.addBoardHover('player-one-board')
+    addHoverListeners('player-one-board')
   }
 
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
