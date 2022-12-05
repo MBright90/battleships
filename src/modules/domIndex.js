@@ -49,23 +49,25 @@ const dom = (() => {
       return currentRow
     }
 
-    const boardWrapper = createClassElement('div', 'game-board', boardClassName)
-    for (let i = 1; i <= size; i += 1) boardWrapper.appendChild(boardRow(i))
-    return boardWrapper
+    const boardDiv = createClassElement('div', 'game-board', boardClassName)
+    for (let i = 1; i <= size; i += 1) boardDiv.appendChild(boardRow(i))
+    return boardDiv
   }
 
   function createBoards() {
     const main = document.querySelector('main')
     main.childNodes.forEach((node) => node.remove())
+    const boardWrapper = createClassElement('div', 'board-wrapper')
     appendChildren(
-      main,
+      boardWrapper,
       newBoard('player-one-board', 10),
       newBoard('player-two-board', 10),
     )
+    main.appendChild(boardWrapper)
   }
 
   function boardHoverCallback(event) {
-    if (!event.target.style.backgroundColor) event.target.style.backgroundColor = 'red'
+    if (!event.target.style.backgroundColor) event.target.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
     else event.target.style.backgroundColor = ''
   }
 
