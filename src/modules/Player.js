@@ -34,6 +34,10 @@ class Player {
     }
   }
 
+  // ****************** //
+  // Position functions //
+  // ****************** //
+
   addShipPosition(positionArray, shipName) {
     if (positionArray.length <= this.ships[shipName].size) {
       this.ships[shipName].position = positionArray
@@ -49,6 +53,14 @@ class Player {
     Object.keys(this.ships).forEach((ship) => {
       positions[positions.length - 1] = ship.positions
     })
+  }
+
+  // *************** //
+  // Image functions //
+  // *************** //
+
+  getImagePath(shipName) {
+    return this.ships[shipName].image
   }
 }
 
