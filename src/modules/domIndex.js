@@ -27,6 +27,17 @@ const dom = (() => {
     return element
   }
 
+  function createCellArray(cell, shipLength, axis) {
+    const cellArray = []
+    for (let i = 0; i < shipLength; i += 1) {
+      let currentCell
+      if (axis === 'x') currentCell = document.querySelector(`[data-x-pos="${parseInt(cell.dataset.xPos, 10) + i}"][data-y-pos="${cell.dataset.xPos}"]`)
+      if (axis === 'y') currentCell = document.querySelector(`[data-x-pos="${cell.dataset.xPos}"][data-y-pos="${parseInt(cell.dataset.yPos, 10) + i}"]`)
+      cellArray[cellArray.length - 1] = currentCell
+    }
+    return cellArray
+  }
+
   // *************************** //
   // Board creation/manipulation //
   // *************************** //
@@ -40,8 +51,8 @@ const dom = (() => {
         setAttributes(
           boardCell,
           [
-            { 'dataset-x-pos': i },
-            { 'dataset-y-pos': rowNumber },
+            { 'data-x-pos': i },
+            { 'data-y-pos': rowNumber },
           ],
         )
         currentRow.appendChild(boardCell)
@@ -66,25 +77,27 @@ const dom = (() => {
     main.appendChild(boardWrapper)
   }
 
-  function boardHoverCallback(event) {
-    if (!event.target.style.backgroundColor) event.target.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
-    else event.target.style.backgroundColor = ''
+  function createImage(shipName, shipImage) {
+    const image = createClassElement('img', shipName)
+    image.src = shipImage
   }
 
-  function placeShipCallback(event, shipLength, axis, available) {
-    const cellArray = []
+  function boardHoverCallback(event, shipLength, axis) {
+    shipLength = shipLength || 1
+    axis = axis || 'x'
+
+    const cellArray = createCellArray(event.target, shipLength, axis)
+    cellArray.forEach((cell) => {
+      if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
+      else cell.style.backgroundColor = ''
+    })
+  }
+
+  function placeShipCallback(event, ship, axis, available) {
     if (available) {
-      for (let i = 0; i < shipLength; i += 1) {
-        let currentCell
-        if (axis === 'x') currentCell = [event.target.dataset.xPos + i, event.target.dataset.yPos]
-        if (axis === 'y') currentCell = [event.target.dataset.xPos, event.target.dataset.yPos + i]
-        cellArray[cellArray.length - 1] = currentCell
-      }
+      event.target.appendChild(createImage(ship))
     }
-    return cellArray || false
   }
-
-  // function placeShip(shipSize, direction, sizeQueue) { if (sizeQueue.length == 0) return }
 
   // **************** //
   // Dom manipulation //
