@@ -5,6 +5,33 @@ import Umpire from './modules/umpire'
 document.body.appendChild(dom.initPage())
 const umpire = new Umpire('player')
 
+// ************* //
+// Image library //
+// ************* //
+
+const shipImages = {
+  carrier: {
+    size: 5,
+    image: './assets/images/carrier.jpg',
+  },
+  battleship: {
+    size: 4,
+    image: './assets/images/battleship.jpg',
+  },
+  submarine: {
+    size: 3,
+    image: './assets/images/submarine.jpg',
+  },
+  cruiser: {
+    size: 3,
+    image: './assets/images/cruiser.jpg',
+  },
+  destroyer: {
+    size: 2,
+    image: './assets/images/destroyer.jpg',
+  },
+}
+
 // ****************** //
 // Listener functions //
 // ****************** //
