@@ -2,6 +2,8 @@ class Umpire {
   constructor(opponent) {
     this.score = 0
     this.opponent = opponent || 'ai'
+    this.playerMoves = []
+    this.opponentMoves = []
   }
 
   setOpponent(opponent) {
