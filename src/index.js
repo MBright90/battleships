@@ -4,10 +4,18 @@ import Umpire from './modules/Umpire'
 
 document.body.appendChild(dom.initPage())
 const umpire = new Umpire('player')
+const axis = 'x'
 
 // ****************** //
 // Listener functions //
 // ****************** //
+
+function placeShipListeners(boardName, shipLength) {
+  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+  boardCells.forEach((cell) => cell.addEventListener('click', (e) => {
+    dom.placeShipCallback(e, shipLength, axis)
+  }))
+}
 
 function removeHoverListeners(e) {
   e.target.style.backgroundColor = ''
@@ -21,7 +29,10 @@ function addHoverListeners(boardName) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => cell.addEventListener('mouseover', dom.boardHoverCallback))
   boardCells.forEach((cell) => cell.addEventListener('mouseout', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.addEventListener('click', removeHoverListeners))
+  boardCells.forEach((cell) => cell.addEventListener('click', (e) => {
+    removeHoverListeners(e)
+    placeShipListeners()
+  }))
 }
 
 function gameSetupListeners() {
