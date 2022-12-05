@@ -9,16 +9,19 @@ const umpire = new Umpire('player')
 // Listener functions //
 // ****************** //
 
+function removeHoverListeners(e) {
+  e.target.style.backgroundColor = ''
+  const boardCells = document.querySelectorAll('.row .cell')
+  boardCells.forEach((cell) => cell.removeEventListener('mouseover', dom.boardHoverCallback))
+  boardCells.forEach((cell) => cell.removeEventListener('mouseout', dom.boardHoverCallback))
+  boardCells.forEach((cell) => cell.removeEventListener('click', removeHoverListeners))
+}
+
 function addHoverListeners(boardName) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => cell.addEventListener('mouseover', dom.boardHoverCallback))
   boardCells.forEach((cell) => cell.addEventListener('mouseout', dom.boardHoverCallback))
-}
-
-function removeHoverListeners(boardName) {
-  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  boardCells.forEach((cell) => cell.removeEventListener('mouseover', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.removeEventListener('mouseout', dom.boardHoverCallback))
+  boardCells.forEach((cell) => cell.addEventListener('click', removeHoverListeners))
 }
 
 function gameSetupListeners() {
