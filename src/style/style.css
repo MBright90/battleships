@@ -61,3 +61,32 @@ footer {
     height: 40px;
     width: 40px
 }
+
+/***************/
+/* Ship images */
+/***************/
+
+.carrier {
+    height: 100%;
+    width: 500%;
+}
+
+.battleship {
+    height: 100%;
+    width: 400%;
+}
+
+.submarine {
+    height: 100%;
+    width: 300%;
+}
+
+.cruiser {
+    height: 100%;
+    width: 200%
+}
+
+.destroyer {
+    height: 100%;
+    width: 200%
+}
