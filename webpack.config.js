@@ -16,6 +16,10 @@ module.exports = {
           from: 'src/assets/images/favicon',
           to: 'assets/images/favicon',
         },
+        {
+          from: 'src/assets/images',
+          to: 'assets/images',
+        }
       ],
     }),
   ],
