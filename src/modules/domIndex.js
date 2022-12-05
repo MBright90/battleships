@@ -71,6 +71,19 @@ const dom = (() => {
     else event.target.style.backgroundColor = ''
   }
 
+  function placeShipCallback(event, shipLength, axis, available) {
+    const cellArray = []
+    if (available) {
+      for (let i = 0; i < shipLength; i += 1) {
+        let currentCell
+        if (axis === 'x') currentCell = [event.target.dataset.xPos + i, event.target.dataset.yPos]
+        if (axis === 'y') currentCell = [event.target.dataset.xPos, event.target.dataset.yPos + i]
+        cellArray[cellArray.length - 1] = currentCell
+      }
+    }
+    return cellArray || false
+  }
+
   // function placeShip(shipSize, direction, sizeQueue) { if (sizeQueue.length == 0) return }
 
   // **************** //
@@ -140,6 +153,7 @@ const dom = (() => {
 
     createBoards,
     boardHoverCallback,
+    placeShipCallback,
 
     removeElements,
   }
