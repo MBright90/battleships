@@ -1,3 +1,5 @@
+import utilities from './utilities'
+
 const dom = (() => {
   // ***************** //
   // Utility functions //
@@ -25,17 +27,6 @@ const dom = (() => {
       Object.keys(object).forEach((key) => element.setAttribute(key, object[key]))
     })
     return element
-  }
-
-  function createCellArray(cell, shipLength, axis) {
-    const cellArray = []
-    for (let i = 0; i < shipLength; i += 1) {
-      let currentCell
-      if (axis === 'x') currentCell = document.querySelector(`[data-x-pos="${parseInt(cell.dataset.xPos, 10) + i}"][data-y-pos="${cell.dataset.yPos}"]`)
-      if (axis === 'y') currentCell = document.querySelector(`[data-x-pos="${cell.dataset.xPos}"][data-y-pos="${parseInt(cell.dataset.yPos, 10) + i}"]`)
-      if (currentCell) cellArray[cellArray.length] = currentCell
-    }
-    return cellArray
   }
 
   // *************************** //
@@ -91,12 +82,12 @@ const dom = (() => {
     return image
   }
 
-  function boardHoverCallback(event, shipLength, axis, currentPositions) {
+  function boardHoverCallback(event, boardName, shipLength, axis, currentPositions) {
     shipLength = shipLength || 1
     axis = axis || 'x'
     currentPositions = currentPositions || []
 
-    const cellArray = createCellArray(event.target, shipLength, axis)
+    const cellArray = utilities.createCellArray(event.target, boardName, shipLength, axis)
     if (cellArray.length === shipLength
       || cellArray.some((cell) => currentPositions.includes(cell))
     ) {
@@ -112,10 +103,9 @@ const dom = (() => {
     }
   }
 
-  function placeShipCallback(event, ship, axis, available) {
-    if (available) {
-      event.target.appendChild(createImage(ship))
-    }
+  function placeShip(cell, ship, axis) {
+    if (axis === 'y') ship.style.transform = 'rotate(90deg) translate(20px)'
+    cell.appendChild(createImage(ship.name, ship.image))
   }
 
   // **************** //
@@ -183,7 +173,7 @@ const dom = (() => {
   function showCell(e) {
     const cell = e.target
     // const i = 1
-    console.log(createCellArray(cell, 1, 'x'))
+    console.log(utilities.createCellArray(cell, 1, 'x'))
   }
 
   return {
@@ -191,7 +181,7 @@ const dom = (() => {
 
     createBoards,
     boardHoverCallback,
-    placeShipCallback,
+    placeShip,
     showCell,
 
     removeElements,
