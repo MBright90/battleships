@@ -1,3 +1,5 @@
+import utilities from './utilities'
+
 class Umpire {
   constructor(currentPlayer) {
     this.score = 0
@@ -15,9 +17,20 @@ class Umpire {
     return this.currentPlayer
   }
 
-  switchCurrentPlayer() {
-    if (this.currentPlayer === 'player-one') this.currentPlayer = 'player-two'
-    else this.currentPlayer = 'player-one'
+  switchCurrentPlayer(nextPlayer) {
+    this.currentPlayer = nextPlayer
+  }
+
+  isAvailable(target, player, ship, takenPositions, axis) {
+    let isAvailable
+    const cellArray = utilities.createCellArray(target, player.getBoardName(), ship.size, axis)
+    if (!cellArray.length === ship.size) return false
+    cellArray.forEach((cell) => {
+      if (takenPositions.includes(cell)) {
+        isAvailable = false
+      }
+    })
+    return isAvailable
   }
 
   setUpGame() {
@@ -33,4 +46,4 @@ class Umpire {
   }
 }
 
-module.exports = Umpire
+export default { Umpire }
