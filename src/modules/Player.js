@@ -1,5 +1,6 @@
 class Player {
-  constructor() {
+  constructor(boardName) {
+    this.boardName = boardName
     this.ships = {
       carrier: {
         size: 5,
@@ -32,6 +33,16 @@ class Player {
         image: './assets/images/destroyer.jpg',
       },
     }
+  }
+
+  getBoardName() {
+    return this.boardName
+  }
+
+  getNextShip() {
+    const unusedShips = Object.keys(this.ships).filter((ship) => ship.position.length === 0)
+    if (unusedShips.length === 0) return false
+    return unusedShips[0]
   }
 
   // ****************** //
