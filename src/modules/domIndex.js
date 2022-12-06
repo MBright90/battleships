@@ -31,9 +31,9 @@ const dom = (() => {
     const cellArray = []
     for (let i = 0; i < shipLength; i += 1) {
       let currentCell
-      if (axis === 'x') currentCell = document.querySelector(`[data-x-pos="${parseInt(cell.dataset.xPos, 10) + i}"][data-y-pos="${cell.dataset.xPos}"]`)
+      if (axis === 'x') currentCell = document.querySelector(`[data-x-pos="${parseInt(cell.dataset.xPos, 10) + i}"][data-y-pos="${cell.dataset.yPos}"]`)
       if (axis === 'y') currentCell = document.querySelector(`[data-x-pos="${cell.dataset.xPos}"][data-y-pos="${parseInt(cell.dataset.yPos, 10) + i}"]`)
-      cellArray[cellArray.length - 1] = currentCell
+      if (currentCell) cellArray[cellArray.length] = currentCell
     }
     return cellArray
   }
@@ -82,15 +82,27 @@ const dom = (() => {
     image.src = shipImage
   }
 
-  function boardHoverCallback(event, shipLength, axis) {
-    shipLength = shipLength || 1
+  function boardHoverCallback(event, shipLength, axis, currentPositions) {
+    shipLength = shipLength || 5
     axis = axis || 'x'
+    currentPositions = currentPositions || []
 
-    const cellArray = createCellArray(event.target, shipLength, axis)
-    cellArray.forEach((cell) => {
-      if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
-      else cell.style.backgroundColor = ''
-    })
+    const cellArray = createCellArray(event.target, 5, axis)
+    console.log(cellArray)
+
+    if (cellArray.length === shipLength
+      || cellArray.some((cell) => currentPositions.includes(cell))
+    ) {
+      cellArray.forEach((cell) => {
+        if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
+        else cell.style.backgroundColor = ''
+      })
+    } else {
+      cellArray.forEach((cell) => {
+        if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(200, 95, 95, 0.7)'
+        else cell.style.backgroundColor = ''
+      })
+    }
   }
 
   function placeShipCallback(event, ship, axis, available) {
@@ -161,12 +173,19 @@ const dom = (() => {
     return layoutWrapper
   }
 
+  function showCell(e) {
+    const cell = e.target
+    // const i = 1
+    console.log(createCellArray(cell, 1, 'x'))
+  }
+
   return {
     initPage,
 
     createBoards,
     boardHoverCallback,
     placeShipCallback,
+    showCell,
 
     removeElements,
   }
