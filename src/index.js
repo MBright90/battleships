@@ -17,12 +17,14 @@ function placeShipListeners(boardName, shipLength) {
   }))
 }
 
-function removeHoverListeners(e) {
-  e.target.style.backgroundColor = ''
+function removeHoverListeners() {
   const boardCells = document.querySelectorAll('.row .cell')
-  boardCells.forEach((cell) => cell.removeEventListener('mouseover', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.removeEventListener('mouseout', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.removeEventListener('click', removeHoverListeners))
+  boardCells.forEach((cell) => {
+    if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
+    cell.removeEventListener('mouseover', dom.boardHoverCallback)
+    cell.removeEventListener('mouseout', dom.boardHoverCallback)
+    cell.removeEventListener('click', removeHoverListeners)
+  })
 }
 
 function addHoverListeners(boardName) {
@@ -42,6 +44,7 @@ function gameSetupListeners() {
     buttons.forEach((button) => button.remove())
     umpire.setOpponent(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
+    // logCell('player-one-board')
     addHoverListeners('player-one-board')
   }
 
