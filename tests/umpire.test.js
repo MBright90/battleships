@@ -1,4 +1,4 @@
-const Umpire = require('../src/modules/Umpire')
+import Umpire from '../src/modules/Umpire'
 
 test('Umpire initializes score to zero', () => {
     const umpire = new Umpire()
