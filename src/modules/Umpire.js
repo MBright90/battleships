@@ -1,8 +1,7 @@
 class Umpire {
-  constructor(opponent) {
+  constructor(currentPlayer) {
     this.score = 0
-    this.currentPlayer = 'player-one'
-    this.opponent = opponent || 'ai'
+    this.currentPlayer = currentPlayer
 
     this.playerMoves = []
     this.opponentMoves = []
