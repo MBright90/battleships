@@ -42,30 +42,37 @@ const dom = (() => {
   // Board creation/manipulation //
   // *************************** //
 
-  function newBoard(boardClassName, size) {
-    const boardRow = (rowNumber) => {
-      const currentRow = document.createElement('div')
-      currentRow.classList.add('row')
-      for (let i = 1; i <= size; i += 1) {
-        const boardCell = createClassElement('div', 'cell')
-        setAttributes(
-          boardCell,
-          [
-            { 'data-x-pos': i },
-            { 'data-y-pos': rowNumber },
-          ],
-        )
-        currentRow.appendChild(boardCell)
+  function createBoards() {
+    function newBoard(boardClassName, size) {
+      const boardRow = (rowNumber) => {
+        const currentRow = document.createElement('div')
+        currentRow.classList.add('row')
+        for (let i = 1; i <= size; i += 1) {
+          const boardCell = createClassElement('div', 'cell')
+          setAttributes(
+            boardCell,
+            [
+              { 'data-x-pos': i },
+              { 'data-y-pos': rowNumber },
+            ],
+          )
+          currentRow.appendChild(boardCell)
+        }
+        return currentRow
       }
-      return currentRow
+
+      const boardDiv = createClassElement('div', 'game-board', boardClassName)
+      for (let i = 1; i <= size; i += 1) boardDiv.appendChild(boardRow(i))
+      return boardDiv
     }
 
-    const boardDiv = createClassElement('div', 'game-board', boardClassName)
-    for (let i = 1; i <= size; i += 1) boardDiv.appendChild(boardRow(i))
-    return boardDiv
-  }
+    function createDescriptionSpace() {
+      const descriptionContainer = createClassElement('div', 'description-container')
+      const axisButton = createClassElement('button', 'axis-button')
+      axisButton.textContent = 'Axis'
+      return appendChildren(descriptionContainer, axisButton)
+    }
 
-  function createBoards() {
     const main = document.querySelector('main')
     main.childNodes.forEach((node) => node.remove())
     const boardWrapper = createClassElement('div', 'board-wrapper')
@@ -73,6 +80,7 @@ const dom = (() => {
       boardWrapper,
       newBoard('player-one-board', 10),
       newBoard('player-two-board', 10),
+      createDescriptionSpace(),
     )
     main.appendChild(boardWrapper)
   }
@@ -80,16 +88,15 @@ const dom = (() => {
   function createImage(shipName, shipImage) {
     const image = createClassElement('img', shipName)
     image.src = shipImage
+    return image
   }
 
   function boardHoverCallback(event, shipLength, axis, currentPositions) {
-    shipLength = shipLength || 5
+    shipLength = shipLength || 1
     axis = axis || 'x'
     currentPositions = currentPositions || []
 
-    const cellArray = createCellArray(event.target, 5, axis)
-    console.log(cellArray)
-
+    const cellArray = createCellArray(event.target, shipLength, axis)
     if (cellArray.length === shipLength
       || cellArray.some((cell) => currentPositions.includes(cell))
     ) {
