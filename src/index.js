@@ -1,42 +1,62 @@
 import './style/style.css'
 import dom from './modules/domIndex'
 import Umpire from './modules/Umpire'
+import Player from './modules/Player'
 
 document.body.appendChild(dom.initPage())
-const umpire = new Umpire('player')
-const axis = 'x'
+const playerOne = new Player('player-one-board')
+const playerTwo = new Player('player-two-board')
+const umpire = new Umpire(playerOne)
+let axis = 'x'
 
-// ****************** //
-// Listener functions //
-// ****************** //
+// ***************************** //
+// Game setup Listener functions //
+// ***************************** //
 
-function placeShipListeners(boardName, shipLength) {
-  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  boardCells.forEach((cell) => cell.addEventListener('click', (e) => {
-    dom.placeShipCallback(e, shipLength, axis)
-  }))
+function changeAxisListener() {
+  const axisCallback = () => {
+    if (axis === 'x') axis = 'y'
+    else axis = 'x'
+  }
+
+  const axisButton = document.querySelector('.axis-button')
+  axisButton.addEventListener('click', axisCallback)
 }
 
-function removeHoverListeners(boardName) {
+function removeHoverListeners(boardName, ship, currentPositions) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', dom.boardHoverCallback)
     cell.removeEventListener('mouseout', dom.boardHoverCallback)
-    cell.removeEventListener('click', removeHoverListeners)
+    cell.removeEventListener('click', (e) => {
+      if (umpire.isAvailable(e.target, ship, currentPositions, axis)) {
+        removeHoverListeners(boardName, ship, currentPositions)
+        dom.placeShip(e.target, ship, axis)
+      }
+    })
   })
 }
 
-function addHoverListeners(boardName, shipLength) {
+function placeShip(e, player, currentShip) {
+  removeHoverListeners(player.getBoardName())
+  dom.placeShip(e, currentShip)
+  player.addShipPosition()
+}
+
+function addHoverListeners(player) {
+  const boardName = player.getBoardName()
+  const ship = player.getNextShip()
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  const currentPositions = 'Here they go'
+  const currentPositions = player.allShipPositions
   boardCells.forEach((cell) => {
-    cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
-    cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
+    cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
+    cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
+
     cell.addEventListener('click', (e) => {
-      if (isAvailable) {
-        removeHoverListeners(boardName)
-        placeShipListeners(e) // Change to place ship!
+      if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
+        removeHoverListeners(boardName, ship, currentPositions)
+        dom.placeShip(e.target, ship, axis)
       }
     })
   })
@@ -49,8 +69,8 @@ function gameSetupListeners() {
     buttons.forEach((button) => button.remove())
     umpire.setOpponent(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
-    // logCell('player-one-board')
-    addHoverListeners('player-one-board', 5)
+    changeAxisListener()
+    addHoverListeners(umpire.getCurrentPlayer())
   }
 
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
