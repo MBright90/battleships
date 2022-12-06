@@ -17,8 +17,8 @@ function placeShipListeners(boardName, shipLength) {
   }))
 }
 
-function removeHoverListeners() {
-  const boardCells = document.querySelectorAll('.row .cell')
+function removeHoverListeners(boardName) {
+  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', dom.boardHoverCallback)
@@ -34,8 +34,10 @@ function addHoverListeners(boardName, shipLength) {
     cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
     cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
     cell.addEventListener('click', (e) => {
-      removeHoverListeners(e)
-      placeShipListeners()
+      if (isAvailable) {
+        removeHoverListeners(boardName)
+        placeShipListeners(e) // Change to place ship!
+      }
     })
   })
 }
