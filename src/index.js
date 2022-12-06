@@ -27,14 +27,17 @@ function removeHoverListeners() {
   })
 }
 
-function addHoverListeners(boardName) {
+function addHoverListeners(boardName, shipLength) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  boardCells.forEach((cell) => cell.addEventListener('mouseover', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.addEventListener('mouseout', dom.boardHoverCallback))
-  boardCells.forEach((cell) => cell.addEventListener('click', (e) => {
-    removeHoverListeners(e)
-    placeShipListeners()
-  }))
+  const currentPositions = 'Here they go'
+  boardCells.forEach((cell) => {
+    cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
+    cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, shipLength, axis, currentPositions))
+    cell.addEventListener('click', (e) => {
+      removeHoverListeners(e)
+      placeShipListeners()
+    })
+  })
 }
 
 function gameSetupListeners() {
@@ -45,7 +48,7 @@ function gameSetupListeners() {
     umpire.setOpponent(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
     // logCell('player-one-board')
-    addHoverListeners('player-one-board')
+    addHoverListeners('player-one-board', 5)
   }
 
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
