@@ -44,7 +44,8 @@ footer {
 .board-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 50px;
+    column-gap: 50px;
+    row-gap: 20px;
 }
 
 .game-board {
