@@ -1,5 +1,6 @@
 class Player {
   constructor(boardName) {
+    this.moves = []
     this.boardName = boardName
     this.ships = {
       carrier: {
@@ -40,9 +41,9 @@ class Player {
   }
 
   getNextShip() {
-    const unusedShips = Object.keys(this.ships).filter((ship) => ship.position.length === 0)
-    if (unusedShips.length === 0) return false
-    return unusedShips[0]
+    const unused = Object.keys(this.ships).filter((ship) => this.ships[ship].position.length === 0)
+    if (unused.length === 0) return false
+    return unused[0]
   }
 
   // ****************** //
