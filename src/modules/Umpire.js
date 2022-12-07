@@ -1,10 +1,10 @@
-import utilities from './utilities'
+const utilities = require('./utilities').default
 
-class Umpire {
-  constructor(currentPlayer) {
+export default class Umpire {
+  constructor(currentPlayer, players) {
     this.score = 0
     this.currentPlayer = currentPlayer
-
+    this.players = players
     this.playerMoves = []
     this.opponentMoves = []
   }
@@ -46,4 +46,4 @@ class Umpire {
   }
 }
 
-export default { Umpire }
+module.exports = Umpire
