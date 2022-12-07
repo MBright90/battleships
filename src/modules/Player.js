@@ -48,7 +48,7 @@ class Player {
   getNextShip() {
     const unused = Object.keys(this.ships).filter((ship) => this.ships[ship].position.length === 0)
     if (unused.length === 0) return false
-    console.log(this.ships[unused[0]])
+    return this.ships[unused[0]]
   }
 
   // ****************** //
