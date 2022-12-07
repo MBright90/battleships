@@ -1,12 +1,12 @@
 const utilities = require('./utilities').default
 
-export default class Umpire {
-  constructor(currentPlayer, players) {
+class Umpire {
+  constructor(firstPlayer, secondPlayer) {
     this.score = 0
-    this.currentPlayer = currentPlayer
-    this.players = players
-    this.playerMoves = []
-    this.opponentMoves = []
+    this.currentPlayer = firstPlayer
+    this.players = [firstPlayer, secondPlayer]
+    // this.playerMoves = []
+    // this.opponentMoves = []
   }
 
   setOpponent(opponent) {
