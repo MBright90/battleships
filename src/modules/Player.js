@@ -4,30 +4,35 @@ class Player {
     this.boardName = boardName
     this.ships = {
       carrier: {
+        name: 'carrier',
         size: 5,
         status: 'active',
         position: [],
         image: './assets/images/carrier.jpg',
       },
       battleship: {
+        name: 'battleship',
         size: 4,
         status: 'active',
         position: [],
         image: './assets/images/battleship.jpg',
       },
       submarine: {
+        name: 'submarine',
         size: 3,
         status: 'active',
         position: [],
         image: './assets/images/submarine.jpg',
       },
       cruiser: {
+        name: 'cruiser',
         size: 3,
         status: 'active',
         position: [],
         image: './assets/images/cruiser.jpg',
       },
       destroyer: {
+        name: 'destroyer',
         size: 2,
         status: 'active',
         position: [],
@@ -43,7 +48,7 @@ class Player {
   getNextShip() {
     const unused = Object.keys(this.ships).filter((ship) => this.ships[ship].position.length === 0)
     if (unused.length === 0) return false
-    return unused[0]
+    console.log(this.ships[unused[0]])
   }
 
   // ****************** //
