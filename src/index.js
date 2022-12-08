@@ -38,8 +38,8 @@ function removeHoverListeners(player, boardName, ship, currentPositions) {
   })
 }
 
-function placeShip(e, player, currentShip) {
-  dom.placeShip(e.target, currentShip)
+function placeShip(e, player, currentShip) { // WORK ON THIS NEXT
+  dom.placeShip(e.target, currentShip, axis)
   player.addShipPosition()
 }
 
