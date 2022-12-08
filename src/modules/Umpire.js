@@ -24,7 +24,6 @@ class Umpire {
   isAvailable(target, player, ship, takenPositions, axis) {
     let isAvailable = true
     const cellArray = utilities.createCellArray(target, player.getBoardName(), ship.size, axis)
-    console.log(cellArray)
     if (cellArray.length !== ship.size) isAvailable = false
     cellArray.forEach((cell) => {
       if (takenPositions.includes(cell)) {
