@@ -23,14 +23,14 @@ function changeAxisListener() {
   axisButton.addEventListener('click', axisCallback)
 }
 
-function removeHoverListeners(boardName, ship, currentPositions) {
+function removeHoverListeners(player, boardName, ship, currentPositions) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
-    cell.removeEventListener('mouseover', dom.boardHoverCallback)
-    cell.removeEventListener('mouseout', dom.boardHoverCallback)
+    cell.removeEventListener('mouseover', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
+    cell.removeEventListener('mouseout', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
     cell.removeEventListener('click', (e) => {
-      if (umpire.isAvailable(e.target, ship, currentPositions, axis)) {
+      if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
         removeHoverListeners(boardName, ship, currentPositions)
         dom.placeShip(e.target, ship, axis)
       }
@@ -49,12 +49,12 @@ function addHoverListeners(player) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   const currentPositions = player.allShipPositions()
   boardCells.forEach((cell) => {
-    cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
-    cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
+    cell.addEventListener('mouseover', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
+    cell.addEventListener('mouseout', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
 
     cell.addEventListener('click', (e) => {
       if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-        removeHoverListeners(boardName, ship, currentPositions)
+        removeHoverListeners(player, boardName, ship, currentPositions)
         dom.placeShip(e.target, ship, axis)
       }
     })
