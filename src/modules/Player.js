@@ -68,8 +68,9 @@ class Player {
   allShipPositions() {
     const positions = []
     Object.keys(this.ships).forEach((ship) => {
-      positions[positions.length - 1] = ship.positions
+      if (ship.positions) positions[positions.length] = ship.positions
     })
+    return positions
   }
 
   // *************** //
