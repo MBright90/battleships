@@ -82,7 +82,7 @@ const dom = (() => {
     return image
   }
 
-  function boardHoverCallback(event, boardName, shipLength, axis, currentPositions) {
+  function boardHover(event, boardName, shipLength, axis, currentPositions) {
     shipLength = shipLength || 1
     axis = axis || 'x'
     currentPositions = currentPositions || []
@@ -104,8 +104,10 @@ const dom = (() => {
   }
 
   function placeShip(cell, ship, axis) {
+    console.log('SHIP PLACED')
     const shipElement = createImage(ship.name, ship.image)
-    if (axis === 'y') shipElement.style.transform = 'rotate(90deg) translate(20px)'
+    if (axis === 'y') shipElement.style.transform = 'rotate(90deg) translate(5px)'
+    // Fix translation !!!
     cell.appendChild(shipElement)
     return utilities.createCellArray(cell, ship.size, axis)
   }
@@ -172,19 +174,12 @@ const dom = (() => {
     return layoutWrapper
   }
 
-  function showCell(e) {
-    const cell = e.target
-    // const i = 1
-    console.log(utilities.createCellArray(cell, 1, 'x'))
-  }
-
   return {
     initPage,
 
     createBoards,
-    boardHoverCallback,
+    boardHover,
     placeShip,
-    showCell,
 
     removeElements,
   }
