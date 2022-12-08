@@ -6,7 +6,7 @@ import Player from './modules/Player'
 document.body.appendChild(dom.initPage())
 const playerOne = new Player('player-one-board')
 const playerTwo = new Player('player-two-board')
-const umpire = new Umpire(playerOne)
+const umpire = new Umpire(playerOne, playerTwo)
 let axis = 'x'
 
 // ***************************** //
@@ -39,8 +39,7 @@ function removeHoverListeners(boardName, ship, currentPositions) {
 }
 
 function placeShip(e, player, currentShip) {
-  removeHoverListeners(player.getBoardName())
-  dom.placeShip(e, currentShip)
+  dom.placeShip(e.target, currentShip)
   player.addShipPosition()
 }
 
@@ -48,7 +47,7 @@ function addHoverListeners(player) {
   const boardName = player.getBoardName()
   const ship = player.getNextShip()
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  const currentPositions = player.allShipPositions
+  const currentPositions = player.allShipPositions()
   boardCells.forEach((cell) => {
     cell.addEventListener('mouseover', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
     cell.addEventListener('mouseout', (e) => dom.boardHoverCallback(e, boardName, ship.size, axis, currentPositions))
