@@ -48,7 +48,7 @@ class Player {
 
   getCurrentShip() {
     if (!this.currentShip) return null
-    return this.currentShip
+    return this.ships[this.currentShip]
   }
 
   getNextShip() {
