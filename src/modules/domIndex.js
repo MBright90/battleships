@@ -104,7 +104,6 @@ const dom = (() => {
   }
 
   function placeShip(cell, ship, axis) {
-    console.log('SHIP PLACED')
     const shipElement = createImage(ship.name, ship.image)
     if (axis === 'y') shipElement.style.transform = 'rotate(90deg) translate(5px)'
     // Fix translation !!!
