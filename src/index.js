@@ -9,6 +9,34 @@ const playerTwo = new Player('player-two-board')
 const umpire = new Umpire(playerOne, playerTwo)
 let axis = 'x'
 
+// ********* //
+// Callbacks //
+// ********* //
+
+// cell.addEventListener('click', (e) => {
+//   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
+//     removeHoverListeners(player, boardName, ship, currentPositions)
+//     dom.placeShip(e.target, ship, axis)
+//   }
+// })
+
+function placeShipCallback(e) {
+  const player = umpire.getCurrentPlayer()
+  const ship = player.getCurrentShip()
+  const currentPositions = player.allShipPositions()
+  if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
+    removeHoverListeners(player, player.getBoardName(), ship, currentPositions)
+    dom.placeShip(e.target, ship, axis)
+  }
+}
+
+function boardHoverCallback(e) {
+  const player = umpire.getCurrentPlayer()
+  const ship = player.getCurrentShip()
+  const currentPositions = player.allShipPositions()
+  dom.boardHover(e, player.getBoardName(), ship.size, axis, currentPositions)
+}
+
 // ***************************** //
 // Game setup Listener functions //
 // ***************************** //
@@ -26,9 +54,10 @@ function changeAxisListener() {
 function removeHoverListeners(player, boardName, ship, currentPositions) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
   boardCells.forEach((cell) => {
+    console.log('removing')
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
-    cell.removeEventListener('mouseover', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
-    cell.removeEventListener('mouseout', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
+    cell.removeEventListener('mouseover', boardHoverCallback)
+    cell.removeEventListener('mouseout', boardHoverCallback)
     cell.removeEventListener('click', (e) => {
       if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
         removeHoverListeners(boardName, ship, currentPositions)
@@ -44,20 +73,20 @@ function placeShip(e, player, currentShip) { // WORK ON THIS NEXT
 }
 
 function addHoverListeners(player) {
-  const boardName = player.getBoardName()
-  const ship = player.getNextShip()
-  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  const currentPositions = player.allShipPositions()
+  // const boardName = player.getBoardName()
+  // const ship = player.getNextShip()
+  const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
+  // const currentPositions = player.allShipPositions()
   boardCells.forEach((cell) => {
-    cell.addEventListener('mouseover', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
-    cell.addEventListener('mouseout', (e) => dom.boardHover(e, boardName, ship.size, axis, currentPositions))
+    cell.addEventListener('mouseover', boardHoverCallback)
+    cell.addEventListener('mouseout', boardHoverCallback)
 
-    cell.addEventListener('click', (e) => {
-      if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-        removeHoverListeners(player, boardName, ship, currentPositions)
-        dom.placeShip(e.target, ship, axis)
-      }
-    })
+    cell.addEventListener('click', placeShipCallback)
+    //   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
+    //     removeHoverListeners(player, boardName, ship, currentPositions)
+    //     dom.placeShip(e.target, ship, axis)
+    //   }
+    // })
   })
 }
 
