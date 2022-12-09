@@ -2,6 +2,7 @@ class Player {
   constructor(boardName) {
     this.moves = []
     this.boardName = boardName
+    this.currentShip = 'carrier'
     this.ships = {
       carrier: {
         name: 'carrier',
@@ -43,6 +44,11 @@ class Player {
 
   getBoardName() {
     return this.boardName
+  }
+
+  getCurrentShip() {
+    if (!this.currentShip) return null
+    return this.currentShip
   }
 
   getNextShip() {
