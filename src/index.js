@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import './style/style.css'
 import dom from './modules/domIndex'
 import Umpire from './modules/Umpire'
@@ -24,7 +25,9 @@ function placeShipCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
   const currentPositions = player.allShipPositions()
+
   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
+    console.log('success')
     removeHoverListeners(player, player.getBoardName(), ship, currentPositions)
     dom.placeShip(e.target, ship, axis)
   }
@@ -34,6 +37,7 @@ function boardHoverCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
   const currentPositions = player.allShipPositions()
+
   dom.boardHover(e, player.getBoardName(), ship.size, axis, currentPositions)
 }
 
@@ -53,8 +57,8 @@ function changeAxisListener() {
 
 function removeHoverListeners(player, boardName, ship, currentPositions) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+  console.log('in removal')
   boardCells.forEach((cell) => {
-    console.log('removing')
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', boardHoverCallback)
     cell.removeEventListener('mouseout', boardHoverCallback)
@@ -67,10 +71,10 @@ function removeHoverListeners(player, boardName, ship, currentPositions) {
   })
 }
 
-function placeShip(e, player, currentShip) { // WORK ON THIS NEXT
-  dom.placeShip(e.target, currentShip, axis)
-  player.addShipPosition()
-}
+// function placeShip(e, player, currentShip) { // WORK ON THIS NEXT
+//   dom.placeShip(e.target, currentShip, axis)
+//   player.addShipPosition()
+// }
 
 function addHoverListeners(player) {
   // const boardName = player.getBoardName()
