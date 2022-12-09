@@ -27,7 +27,6 @@ function placeShipCallback(e) {
   const currentPositions = player.allShipPositions()
 
   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-    console.log('success')
     removeHoverListeners(player, player.getBoardName(), ship, currentPositions)
     dom.placeShip(e.target, ship, axis)
   }
@@ -57,7 +56,6 @@ function changeAxisListener() {
 
 function removeHoverListeners(player, boardName, ship, currentPositions) {
   const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
-  console.log('in removal')
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', boardHoverCallback)
