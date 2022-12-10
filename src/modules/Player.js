@@ -53,7 +53,6 @@ class Player {
 
   getNextShip() {
     const unused = Object.keys(this.ships).filter((ship) => this.ships[ship].position.length === 0)
-    console.log(unused)
     this.currentShip = this.ships[unused[0]].name || null
     return this.currentShip
   }
@@ -66,7 +65,6 @@ class Player {
     if (positionArray.length <= this.ships[shipName].size) {
       this.ships[shipName].position = positionArray
     }
-    console.log(this.ships[shipName])
   }
 
   getShipsPosition(shipName) {
