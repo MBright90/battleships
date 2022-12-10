@@ -14,6 +14,15 @@ let axis = 'x'
 // Callbacks //
 // ********* //
 
+function startNextTurn() {
+  const player = umpire.getCurrentPlayer()
+  if (player.getNextShip()) addHoverListeners(player)
+  else {
+    umpire.switchCurrentPlayer(playerTwo)
+    startNextTurn()
+  }
+}
+
 function placeShipCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
@@ -21,13 +30,16 @@ function placeShipCallback(e) {
 
   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
     removeHoverListeners(player, player.getBoardName(), ship, currentPositions)
-    dom.placeShip(e.target, ship, axis)
+    const cellPositions = dom.placeShip(player, e.target, ship, axis)
+    player.addShipPosition(cellPositions, ship.name)
+    startNextTurn()
   }
 }
 
 function boardHoverCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
+  console.log(ship)
   const currentPositions = player.allShipPositions()
 
   dom.boardHover(e, player.getBoardName(), ship.size, axis, currentPositions)
