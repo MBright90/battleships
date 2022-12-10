@@ -75,27 +75,27 @@ footer {
 /* Ship images */
 /***************/
 
-.carrier {
+.carrier, .battleship, .submarine, .cruiser, .destroyer {
     height: 100%;
+    transform-origin: 20px;
+}
+
+.carrier {
     width: 500%;
 }
 
 .battleship {
-    height: 100%;
     width: 400%;
 }
 
 .submarine {
-    height: 100%;
     width: 300%;
 }
 
 .cruiser {
-    height: 100%;
     width: 200%
 }
 
 .destroyer {
-    height: 100%;
     width: 200%
 }
