@@ -14,13 +14,6 @@ let axis = 'x'
 // Callbacks //
 // ********* //
 
-// cell.addEventListener('click', (e) => {
-//   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-//     removeHoverListeners(player, boardName, ship, currentPositions)
-//     dom.placeShip(e.target, ship, axis)
-//   }
-// })
-
 function placeShipCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
@@ -54,41 +47,22 @@ function changeAxisListener() {
   axisButton.addEventListener('click', axisCallback)
 }
 
-function removeHoverListeners(player, boardName, ship, currentPositions) {
-  const boardCells = document.querySelectorAll(`.${boardName} .row .cell`)
+function removeHoverListeners(player) {
+  const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', boardHoverCallback)
     cell.removeEventListener('mouseout', boardHoverCallback)
-    cell.removeEventListener('click', (e) => {
-      if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-        removeHoverListeners(boardName, ship, currentPositions)
-        dom.placeShip(e.target, ship, axis)
-      }
-    })
+    cell.removeEventListener('click', placeShipCallback)
   })
 }
 
-// function placeShip(e, player, currentShip) { // WORK ON THIS NEXT
-//   dom.placeShip(e.target, currentShip, axis)
-//   player.addShipPosition()
-// }
-
 function addHoverListeners(player) {
-  // const boardName = player.getBoardName()
-  // const ship = player.getNextShip()
   const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
-  // const currentPositions = player.allShipPositions()
   boardCells.forEach((cell) => {
     cell.addEventListener('mouseover', boardHoverCallback)
     cell.addEventListener('mouseout', boardHoverCallback)
-
     cell.addEventListener('click', placeShipCallback)
-    //   if (umpire.isAvailable(e.target, player, ship, currentPositions, axis)) {
-    //     removeHoverListeners(player, boardName, ship, currentPositions)
-    //     dom.placeShip(e.target, ship, axis)
-    //   }
-    // })
   })
 }
 
