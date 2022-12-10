@@ -92,7 +92,7 @@ const dom = (() => {
       || cellArray.some((cell) => currentPositions.includes(cell))
     ) {
       cellArray.forEach((cell) => {
-        if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
+        if (!cell.style.backgroundColor && event.type === 'mouseover') cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
         else cell.style.backgroundColor = ''
       })
     } else {
