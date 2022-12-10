@@ -39,7 +39,6 @@ function placeShipCallback(e) {
 function boardHoverCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
-  console.log(ship)
   const currentPositions = player.allShipPositions()
 
   dom.boardHover(e, player.getBoardName(), ship.size, axis, currentPositions)
