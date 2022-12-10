@@ -103,12 +103,12 @@ const dom = (() => {
     }
   }
 
-  function placeShip(cell, ship, axis) {
+  function placeShip(player, cell, ship, axis) {
     const shipElement = createImage(ship.name, ship.image)
     if (axis === 'y') shipElement.style.transform = 'rotate(90deg)'
     // Fix translation !!!
     cell.appendChild(shipElement)
-    return utilities.createCellArray(cell, ship.size, axis)
+    return utilities.createCellArray(cell, player.getBoardName(), ship.size, axis)
   }
 
   // **************** //
