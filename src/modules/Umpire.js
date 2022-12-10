@@ -5,8 +5,6 @@ class Umpire {
     this.score = 0
     this.currentPlayer = firstPlayer
     this.players = [firstPlayer, secondPlayer]
-    // this.playerMoves = []
-    // this.opponentMoves = []
   }
 
   setOpponent(opponent) {
