@@ -105,7 +105,7 @@ const dom = (() => {
 
   function placeShip(cell, ship, axis) {
     const shipElement = createImage(ship.name, ship.image)
-    if (axis === 'y') shipElement.style.transform = 'rotate(90deg) translate(5px)'
+    if (axis === 'y') shipElement.style.transform = 'rotate(90deg)'
     // Fix translation !!!
     cell.appendChild(shipElement)
     return utilities.createCellArray(cell, ship.size, axis)
