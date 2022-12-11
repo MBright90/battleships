@@ -10,14 +10,6 @@ const playerTwo = new Player('player-two-board')
 const umpire = new Umpire(playerOne, playerTwo)
 let axis = 'x'
 
-// ****************** //
-// Game play functions //
-// ****************** //
-
-function startGame() {
-  console.log('GAME HAS STARTED')
-}
-
 // ********* //
 // Callbacks //
 // ********* //
@@ -28,7 +20,7 @@ function startNextPlacement() {
   else if (player === playerTwo) {
     // If player two has placed all ships, start game
     dom.hideShips(player.getBoardName())
-    startGame()
+    takeTurn()
   } else {
     // If player one has placed all ships, change to player two and hide ships
     // if second player is human
@@ -51,12 +43,24 @@ function placeShipCallback(e) {
   }
 }
 
-function boardHoverCallback(e) {
+function boardPlacementCallback(e) {
   const player = umpire.getCurrentPlayer()
   const ship = player.getCurrentShip()
   const currentPositions = player.allShipPositions()
 
   dom.boardHover(e, player.getBoardName(), ship.size, axis, currentPositions)
+}
+
+function targetHoverCallback(e) {
+  const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
+  dom.boardHover(e, currentTargetBoard)
+}
+
+function targetPlacementCallback(e) {
+  removeTargetListeners()
+  const shipPositions = umpire.getCurrentOpponent().allShipPositions()
+  const turnOutcome = umpire.checkHit(e.target, shipPositions)
+  dom.placeTakenTurn(e.target, turnOutcome)
 }
 
 // ***************************** //
@@ -77,8 +81,8 @@ function removeHoverListeners(player) {
   const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
   boardCells.forEach((cell) => {
     if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
-    cell.removeEventListener('mouseover', boardHoverCallback)
-    cell.removeEventListener('mouseout', boardHoverCallback)
+    cell.removeEventListener('mouseover', boardPlacementCallback)
+    cell.removeEventListener('mouseout', boardPlacementCallback)
     cell.removeEventListener('click', placeShipCallback)
   })
 }
@@ -86,8 +90,8 @@ function removeHoverListeners(player) {
 function addHoverListeners(player) {
   const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
   boardCells.forEach((cell) => {
-    cell.addEventListener('mouseover', boardHoverCallback)
-    cell.addEventListener('mouseout', boardHoverCallback)
+    cell.addEventListener('mouseover', boardPlacementCallback)
+    cell.addEventListener('mouseout', boardPlacementCallback)
     cell.addEventListener('click', placeShipCallback)
   })
 }
@@ -104,6 +108,33 @@ function gameSetupListeners() {
   }
 
   buttons.forEach((button) => button.addEventListener('click', setupButtonCallback))
+}
+
+// ******************* //
+// Game play functions //
+// ******************* //
+
+function removeTargetListeners() {
+  const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
+  const boardCells = document.querySelectorAll(`.${currentTargetBoard} .row .cell`)
+  boardCells.forEach((cell) => {
+    cell.removeEventListener('mouseover', targetHoverCallback)
+    cell.removeEventListener('mouseout', targetHoverCallback)
+    cell.removeEventListener('click', targetPlacementCallback)
+  })
+}
+
+function takeTurn() {
+  const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
+  const boardCells = document.querySelectorAll(`.${currentTargetBoard} .row .cell`)
+  boardCells.forEach((cell) => {
+    console.log(cell)
+    if (!cell.classList.contains('chosen')) {
+      cell.addEventListener('mouseover', targetHoverCallback)
+      cell.addEventListener('mouseout', targetHoverCallback)
+      cell.addEventListener('click', targetPlacementCallback)
+    }
+  })
 }
 
 gameSetupListeners()
