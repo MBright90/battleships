@@ -75,7 +75,7 @@ footer {
 /* Ship images */
 /***************/
 
-.carrier, .battleship, .submarine, .cruiser, .destroyer {
+.ship {
     height: 100%;
     transform-origin: 20px;
 }
