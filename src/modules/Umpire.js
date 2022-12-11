@@ -8,8 +8,12 @@ class Umpire {
     this.players = [firstPlayer, secondPlayer]
   }
 
-  setOpponent(opponent) {
+  setOpponentType(opponent) {
     this.opponentType = opponent
+  }
+
+  getOpponentType() {
+    return this.opponentType
   }
 
   getCurrentPlayer() {
