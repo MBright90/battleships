@@ -4,11 +4,12 @@ class Umpire {
   constructor(firstPlayer, secondPlayer) {
     this.score = 0
     this.currentPlayer = firstPlayer
+    this.currentOpponent = secondPlayer
     this.players = [firstPlayer, secondPlayer]
   }
 
   setOpponent(opponent) {
-    this.opponent = opponent
+    this.opponentType = opponent
   }
 
   getCurrentPlayer() {
@@ -17,6 +18,16 @@ class Umpire {
 
   switchCurrentPlayer(nextPlayer) {
     this.currentPlayer = nextPlayer
+    return this.currentPlayer
+  }
+
+  getCurrentOpponent() {
+    return this.currentOpponent
+  }
+
+  switchCurrentOpponent(nextOpponent) {
+    this.currentOpponent = nextOpponent
+    return this.currentOpponent
   }
 
   isAvailable(target, player, ship, takenPositions, axis) {
@@ -29,6 +40,11 @@ class Umpire {
       }
     })
     return isAvailable
+  }
+
+  checkHit(cell, shipPositions) {
+    if (shipPositions.includes(cell)) return true
+    return false
   }
 
   setUpGame() {
