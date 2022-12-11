@@ -10,16 +10,27 @@ const playerTwo = new Player('player-two-board')
 const umpire = new Umpire(playerOne, playerTwo)
 let axis = 'x'
 
+// ****************** //
+// Game play functions //
+// ****************** //
+
+function startGame() {
+  console.log('GAME HAS STARTED')
+}
+
 // ********* //
 // Callbacks //
 // ********* //
 
-function startNextTurn() {
+function startNextPlacement() {
   const player = umpire.getCurrentPlayer()
   if (player.getNextShip()) addHoverListeners(player)
+  // If player two has placed all ships, start game
+  else if (player === playerTwo) startGame()
+  // If player one has placed all ships, change to player two
   else {
     umpire.switchCurrentPlayer(playerTwo)
-    startNextTurn()
+    startNextPlacement()
   }
 }
 
@@ -32,7 +43,7 @@ function placeShipCallback(e) {
     removeHoverListeners(player, player.getBoardName(), ship, currentPositions)
     const cellPositions = dom.placeShip(player, e.target, ship, axis)
     player.addShipPosition(cellPositions, ship.name)
-    startNextTurn()
+    startNextPlacement()
   }
 }
 
