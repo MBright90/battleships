@@ -51,6 +51,12 @@ class Umpire {
     return false
   }
 
+  checkVictoryConditions() {
+    const playerMoves = this.currentPlayer.moves
+    const opponentPositions = this.currentOpponent.allShipPositions()
+    return opponentPositions.every((position) => playerMoves.includes(position))
+  }
+
   setUpGame() {
     // Place logic for choosing ship spaces
   }
