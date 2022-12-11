@@ -76,12 +76,6 @@ const dom = (() => {
     main.appendChild(boardWrapper)
   }
 
-  function createImage(shipName, shipImage) {
-    const image = createClassElement('img', shipName)
-    image.src = shipImage
-    return image
-  }
-
   function boardHover(event, boardName, shipLength, axis, currentPositions) {
     shipLength = shipLength || 1
     axis = axis || 'x'
@@ -103,12 +97,23 @@ const dom = (() => {
     }
   }
 
+  function createImage(shipName, shipImage) {
+    const image = createClassElement('img', shipName, 'ship')
+    image.src = shipImage
+    return image
+  }
+
   function placeShip(player, cell, ship, axis) {
     const shipElement = createImage(ship.name, ship.image)
     if (axis === 'y') shipElement.style.transform = 'rotate(90deg)'
     // Fix translation !!!
     cell.appendChild(shipElement)
     return utilities.createCellArray(cell, player.getBoardName(), ship.size, axis)
+  }
+
+  function hideShips(boardName) {
+    const allShips = document.querySelectorAll(`.${boardName} .ship`)
+    allShips.style.visibility = 'hidden'
   }
 
   // **************** //
@@ -179,6 +184,7 @@ const dom = (() => {
     createBoards,
     boardHover,
     placeShip,
+    hideShips,
 
     removeElements,
   }
