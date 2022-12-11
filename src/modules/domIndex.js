@@ -113,7 +113,8 @@ const dom = (() => {
 
   function hideShips(boardName) {
     const allShips = document.querySelectorAll(`.${boardName} .ship`)
-    allShips.style.visibility = 'hidden'
+    console.log(allShips)
+    allShips.forEach((ship) => { ship.style.visibility = 'hidden' })
   }
 
   // **************** //
