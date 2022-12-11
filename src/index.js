@@ -25,10 +25,14 @@ function startGame() {
 function startNextPlacement() {
   const player = umpire.getCurrentPlayer()
   if (player.getNextShip()) addHoverListeners(player)
-  // If player two has placed all ships, start game
-  else if (player === playerTwo) startGame()
-  // If player one has placed all ships, change to player two
-  else {
+  else if (player === playerTwo) {
+    // If player two has placed all ships, start game
+    dom.hideShips(player.getBoardName())
+    startGame()
+  } else {
+    // If player one has placed all ships, change to player two and hide ships
+    // if second player is human
+    if (umpire.getOpponentType() === 'player') dom.hideShips(player.getBoardName())
     umpire.switchCurrentPlayer(playerTwo)
     startNextPlacement()
   }
@@ -93,7 +97,7 @@ function gameSetupListeners() {
 
   const setupButtonCallback = (event) => {
     buttons.forEach((button) => button.remove())
-    umpire.setOpponent(event.target.dataset.choice.toLowerCase())
+    umpire.setOpponentType(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
     changeAxisListener()
     addHoverListeners(umpire.getCurrentPlayer())
