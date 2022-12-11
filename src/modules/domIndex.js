@@ -113,8 +113,13 @@ const dom = (() => {
 
   function hideShips(boardName) {
     const allShips = document.querySelectorAll(`.${boardName} .ship`)
-    console.log(allShips)
     allShips.forEach((ship) => { ship.style.visibility = 'hidden' })
+  }
+
+  function placeTakenTurn(cell, outcome) {
+    cell.classList.add('chosen')
+    if (outcome) cell.style.backgroundColor = 'rgba(200, 95, 95, 0.7)'
+    else cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
   }
 
   // **************** //
@@ -186,6 +191,7 @@ const dom = (() => {
     boardHover,
     placeShip,
     hideShips,
+    placeTakenTurn,
 
     removeElements,
   }
