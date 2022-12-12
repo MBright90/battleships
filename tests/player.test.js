@@ -30,7 +30,7 @@ test('Returns false when all positions are not included in taken moves', () => {
     const player = new Player()
     player.ships.battleship.position = ['ba1', 'ba2', 'ba3', 'ba4']
 
-    expect(player.checkShipStatus('battleship', ['ca3', 'ba2', 'ee5']).toBe(false))
+    expect(player.checkShipStatus('battleship', ['ca3', 'ba2', 'ee5'])).toBe(false)
 })
 
 test('Returns the initial cell when all positions are included in taken moves', () => {
