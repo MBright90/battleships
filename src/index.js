@@ -14,11 +14,12 @@ let axis = 'x'
 // Callbacks //
 // ********* //
 
-function checkHitOutcome() {
+function checkHitOutcome(cell) {
   const player = umpire.getCurrentPlayer()
   const opponent = umpire.getCurrentOpponent()
-  const ship = opponent.findTargetShip(e.target)
+  const ship = opponent.findTargetShip(cell)
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
+  if (shipStatus) cell.childNode.style.visibility = 'visible'
 }
 
 function startNextPlacement() {
@@ -68,7 +69,7 @@ function targetPlacementCallback(e) {
   const shipPositions = umpire.getCurrentOpponent().allShipPositions()
   const turnOutcome = umpire.checkHit(e.target, shipPositions)
   dom.placeTakenTurn(e.target, turnOutcome)
-  if (turnOutcome) checkHitOutcome()
+  if (turnOutcome) checkHitOutcome(e.target)
   if (umpire.checkVictoryConditions()) alert('Theres a winner')
 }
 
