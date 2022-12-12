@@ -31,7 +31,7 @@ test('returns each position of ships', () => {
         },
     }
 
-    expect(player.allShipPositions()).toBe([
+    expect(player.allShipPositions()).toStrictEqual([
         'ca1', 'ca2', 'ca3', 'ca4', 'ca5', 
         'ba1', 'ba2', 'ba3', 'ba4', 
         'su1', 'su2', 'su3', 
