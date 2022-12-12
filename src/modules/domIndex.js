@@ -82,14 +82,20 @@ const dom = (() => {
     currentPositions = currentPositions || []
 
     const cellArray = utilities.createCellArray(event.target, boardName, shipLength, axis)
-    if (cellArray.length === shipLength
-      || cellArray.some((cell) => currentPositions.includes(cell))
+    // Clear the array of colored cells when mouse leaves
+    if (event.type === 'mouseout') cellArray.forEach((cell) => { cell.style.backgroundColor = '' })
+    else if (cellArray.length === shipLength
+      && !cellArray.some((cell) => currentPositions.includes(cell))
     ) {
+      // Check that correct length and no taken spaces within the ships length worth of cells
+      // If space is available color in gray
       cellArray.forEach((cell) => {
         if (!cell.style.backgroundColor && event.type === 'mouseover') cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
         else cell.style.backgroundColor = ''
       })
     } else {
+      // If the correct length is unavailable or there is a taken space within the ships length
+      // worth of cells, color the array in red
       cellArray.forEach((cell) => {
         if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(200, 95, 95, 0.7)'
         else cell.style.backgroundColor = ''
