@@ -14,6 +14,13 @@ let axis = 'x'
 // Callbacks //
 // ********* //
 
+function checkHitOutcome() {
+  const player = umpire.getCurrentPlayer()
+  const opponent = umpire.getCurrentOpponent()
+  const ship = opponent.findTargetShip(e.target)
+  const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
+}
+
 function startNextPlacement() {
   const player = umpire.getCurrentPlayer()
   if (player.getNextShip()) addHoverListeners(player)
@@ -61,6 +68,8 @@ function targetPlacementCallback(e) {
   const shipPositions = umpire.getCurrentOpponent().allShipPositions()
   const turnOutcome = umpire.checkHit(e.target, shipPositions)
   dom.placeTakenTurn(e.target, turnOutcome)
+  if (turnOutcome) checkHitOutcome()
+  if (umpire.checkVictoryConditions()) alert('Theres a winner')
 }
 
 // ***************************** //
@@ -128,7 +137,6 @@ function takeTurn() {
   const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
   const boardCells = document.querySelectorAll(`.${currentTargetBoard} .row .cell`)
   boardCells.forEach((cell) => {
-    console.log(cell)
     if (!cell.classList.contains('chosen')) {
       cell.addEventListener('mouseover', targetHoverCallback)
       cell.addEventListener('mouseout', targetHoverCallback)
