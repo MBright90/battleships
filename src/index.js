@@ -80,7 +80,7 @@ function changeAxisListener() {
 function removeHoverListeners(player) {
   const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
   boardCells.forEach((cell) => {
-    if (cell.style.backgroundColor === 'rgba(180, 180, 180, 0.5)') cell.style.backgroundColor = ''
+    if (cell.style.backgroundColor) cell.style.backgroundColor = ''
     cell.removeEventListener('mouseover', boardPlacementCallback)
     cell.removeEventListener('mouseout', boardPlacementCallback)
     cell.removeEventListener('click', placeShipCallback)
