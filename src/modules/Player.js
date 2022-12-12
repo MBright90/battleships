@@ -37,8 +37,16 @@ class Player {
     }
   }
 
+  // **************** //
+  // Standard getters //
+  // **************** //
+
   getBoardName() {
     return this.boardName
+  }
+
+  getMoves() {
+    return this.moves
   }
 
   getCurrentShip() {
@@ -73,6 +81,25 @@ class Player {
       this.ships[ship].position.forEach((position) => { positions[positions.length] = position })
     })
     return positions
+  }
+
+  // ********************** //
+  // Turn outcome functions //
+  // ********************** //
+
+  findTargetShip(cell) {
+    let targetShip = null
+    Object.keys(this.ships).forEach((ship) => {
+      console.log(typeof this.ships[ship].position)
+      if (this.ships[ship].position.includes(cell)) targetShip = ship
+    })
+    return targetShip
+  }
+
+  checkShipStatus(shipName, turnsTaken) {
+    const positionArr = this.ships[shipName].position
+    if (positionArr.every((position) => turnsTaken.includes(position))) return positionArr[0]
+    return false
   }
 
   // *************** //
