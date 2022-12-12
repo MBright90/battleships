@@ -58,7 +58,7 @@ class Player {
   // ****************** //
 
   addShipPosition(positionArray, shipName) {
-    if (positionArray.length <= this.ships[shipName].size) {
+    if (positionArray.length === this.ships[shipName].size) {
       this.ships[shipName].position = positionArray
     }
   }
@@ -72,6 +72,7 @@ class Player {
     Object.keys(this.ships).forEach((ship) => {
       if (ship.positions) positions[positions.length] = ship.positions
     })
+    console.log(this.ships)
     return positions
   }
 
