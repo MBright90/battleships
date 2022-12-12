@@ -1,4 +1,4 @@
-const utilities = require('./utilities').default
+const utilities = require('./utilities')
 
 class Umpire {
   constructor(firstPlayer, secondPlayer) {
