@@ -122,6 +122,10 @@ const dom = (() => {
     allShips.forEach((ship) => { ship.style.visibility = 'hidden' })
   }
 
+  function revealShip(shipHead) {
+    shipHead.children[0].style.visibility = 'visible'
+  }
+
   function placeTakenTurn(cell, outcome) {
     cell.classList.add('chosen')
     if (outcome) cell.style.backgroundColor = 'rgba(200, 95, 95, 0.7)'
@@ -197,6 +201,7 @@ const dom = (() => {
     boardHover,
     placeShip,
     hideShips,
+    revealShip,
     placeTakenTurn,
 
     removeElements,
