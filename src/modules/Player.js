@@ -90,7 +90,6 @@ class Player {
   findTargetShip(cell) {
     let targetShip = null
     Object.keys(this.ships).forEach((ship) => {
-      console.log(typeof this.ships[ship].position)
       if (this.ships[ship].position.includes(cell)) targetShip = ship
     })
     return targetShip
