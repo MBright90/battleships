@@ -63,18 +63,6 @@ class Umpire {
     const opponentPositions = this.currentOpponent.allShipPositions()
     return opponentPositions.every((position) => playerMoves.includes(position))
   }
-
-  setUpGame() {
-    // Place logic for choosing ship spaces
-  }
-
-  playGame() {
-    // Place recursive logic for playing the game
-  }
-
-  resetGame() {
-    // Place logic for resetting the game
-  }
 }
 
 module.exports = Umpire
