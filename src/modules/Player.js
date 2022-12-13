@@ -1,5 +1,6 @@
 class Player {
   constructor(boardName) {
+    this.playerType = 'human'
     this.moves = []
     this.boardName = boardName
     this.currentShip = 'carrier'
@@ -37,9 +38,17 @@ class Player {
     }
   }
 
+  setPlayerType(playerType) {
+    this.playerType = playerType
+  }
+
   // **************** //
   // Standard getters //
   // **************** //
+
+  getPlayerType() {
+    return this.playerType
+  }
 
   getBoardName() {
     return this.boardName
