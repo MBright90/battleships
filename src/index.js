@@ -66,10 +66,15 @@ function targetHoverCallback(e) {
 
 function targetPlacementCallback(e) {
   removeTargetListeners()
+  const cell = e.target
+  // Check where the ships are and whether the chosen cell has hit a ship
   const shipPositions = umpire.getCurrentOpponent().allShipPositions()
-  const turnOutcome = umpire.checkHit(e.target, shipPositions)
-  dom.placeTakenTurn(e.target, turnOutcome)
-  if (turnOutcome) checkHitOutcome(e.target)
+  const turnOutcome = umpire.checkHit(cell, shipPositions)
+  // Change the color of the chosen cell based on the turn outcome and add the move to the players
+  // move list
+  dom.placeTakenTurn(cell, turnOutcome)
+  umpire.getCurrentPlayer().addMove(cell)
+  if (turnOutcome) checkHitOutcome(cell)
   if (umpire.checkVictoryConditions()) console.log('game is won')
   else {
     console.log(umpire.getCurrentOpponent())

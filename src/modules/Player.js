@@ -87,6 +87,10 @@ class Player {
   // Turn outcome functions //
   // ********************** //
 
+  addMove(move) {
+    this.moves[this.moves.length] = move
+  }
+
   findTargetShip(cell) {
     let targetShip = null
     Object.keys(this.ships).forEach((ship) => {
