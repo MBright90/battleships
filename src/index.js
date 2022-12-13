@@ -14,27 +14,37 @@ let axis = 'x'
 // Callbacks //
 // ********* //
 
+function beginGame(player) {
+  dom.hideShips(player.getBoardName())
+  umpire.switchPlayers()
+  takeTurn()
+}
+
+function placePlayerTwoShips(player) {
+  if (umpire.getOpponentType() === 'player') dom.hideShips(player.getBoardName())
+  umpire.switchPlayers()
+  startNextPlacement()
+}
+
 function checkHitOutcome(cell) {
   const player = umpire.getCurrentPlayer()
   const opponent = umpire.getCurrentOpponent()
   const ship = opponent.findTargetShip(cell)
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
-  if (shipStatus) cell.childNode.style.visibility = 'visible'
+  if (shipStatus) console.log(cell.childNodes)
 }
 
 function startNextPlacement() {
   const player = umpire.getCurrentPlayer()
+  // If there are still current player ships to place, begin process
   if (player.getNextShip()) addHoverListeners(player)
   else if (player === playerTwo) {
     // If player two has placed all ships, start game
-    dom.hideShips(player.getBoardName())
-    takeTurn()
+    beginGame(player)
   } else {
     // If player one has placed all ships, change to player two and hide ships
     // if second player is human
-    if (umpire.getOpponentType() === 'player') dom.hideShips(player.getBoardName())
-    umpire.switchCurrentPlayer(playerTwo)
-    startNextPlacement()
+    placePlayerTwoShips(player)
   }
 }
 
@@ -65,6 +75,9 @@ function targetHoverCallback(e) {
 }
 
 function targetPlacementCallback(e) {
+  console.log(umpire.getCurrentOpponent())
+  console.log(umpire.getCurrentPlayer())
+
   removeTargetListeners()
   const cell = e.target
   // Check where the ships are and whether the chosen cell has hit a ship
@@ -77,9 +90,7 @@ function targetPlacementCallback(e) {
   if (turnOutcome) checkHitOutcome(cell)
   if (umpire.checkVictoryConditions()) console.log('game is won')
   else {
-    console.log(umpire.getCurrentOpponent())
     umpire.switchPlayers()
-    console.log(umpire.getCurrentOpponent())
     takeTurn()
   }
 }
