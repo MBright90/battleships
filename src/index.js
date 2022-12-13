@@ -30,8 +30,9 @@ function checkHitOutcome(cell) {
   const player = umpire.getCurrentPlayer()
   const opponent = umpire.getCurrentOpponent()
   const ship = opponent.findTargetShip(cell)
+  // Check if ship is complete, if true, shipStatus becomes the head cell of the ship
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
-  if (shipStatus) console.log(cell.childNodes)
+  if (shipStatus) dom.revealShip(shipStatus)
 }
 
 function startNextPlacement() {
