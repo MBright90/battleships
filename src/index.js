@@ -21,7 +21,7 @@ function beginGame(player) {
 }
 
 function placePlayerTwoShips(player) {
-  if (umpire.getOpponentType() === 'player') dom.hideShips(player.getBoardName())
+  if (player.getPlayerType() === 'human') dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
   startNextPlacement()
 }
@@ -43,8 +43,9 @@ function startNextPlacement() {
     // If player two has placed all ships, start game
     beginGame(player)
   } else {
-    // If player one has placed all ships, change to player two and hide ships
+    // If player one has placed all ships, change to player two, reset axis and hide ships
     // if second player is human
+    axis = 'x'
     placePlayerTwoShips(player)
   }
 }
@@ -134,7 +135,7 @@ function gameSetupListeners() {
 
   const setupButtonCallback = (event) => {
     buttons.forEach((button) => button.remove())
-    umpire.setOpponentType(event.target.dataset.choice.toLowerCase())
+    playerTwo.setPlayerType(event.target.dataset.choice.toLowerCase())
     dom.createBoards()
     changeAxisListener()
     addHoverListeners(umpire.getCurrentPlayer())
