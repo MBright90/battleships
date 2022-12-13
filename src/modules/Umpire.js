@@ -34,6 +34,13 @@ class Umpire {
     return this.currentOpponent
   }
 
+  switchPlayers() {
+    const previousPlayer = this.currentPlayer
+    const previousOpponent = this.currentOpponent
+    this.currentPlayer = previousOpponent
+    this.currentOpponent = previousPlayer
+  }
+
   isAvailable(target, player, ship, takenPositions, axis) {
     let isAvailable = true
     const cellArray = utilities.createCellArray(target, player.getBoardName(), ship.size, axis)
