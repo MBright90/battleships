@@ -148,7 +148,7 @@ const dom = (() => {
     const choicesButtonContainer = createClassElement('div', 'choices-buttons-container')
     appendChildren(
       choicesButtonContainer,
-      createChoiceButton('Player'),
+      createChoiceButton('Human'),
       createChoiceButton('AI'),
     )
     return appendChildren(
