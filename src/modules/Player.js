@@ -1,3 +1,5 @@
+const Brain = require('./aiBrain')
+
 class Player {
   constructor(boardName) {
     this.playerType = 'human'
@@ -120,6 +122,18 @@ class Player {
 
   getImagePath(shipName) {
     return this.ships[shipName].image
+  }
+
+  // ********************** //
+  // ai brain communication //
+  // ********************** //
+
+  initiateBrain() {
+    this.brain = new Brain()
+  }
+
+  takeAiTurn(opponentBoard) {
+    this.brain.chooseSpace(opponentBoard)
   }
 }
 
