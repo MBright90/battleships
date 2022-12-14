@@ -20,10 +20,13 @@ class Brain {
   }
 
   chooseSpace(board) {
+    let cell
     const randomX = generateRandom(10)
     const randomY = generateRandom(10)
     return findCell(board, randomX, randomY)
   }
+
+  setPreviousTurn()
 }
 
 module.exports = Brain
