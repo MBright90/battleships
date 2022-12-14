@@ -17,7 +17,7 @@ let axis = 'x'
 function beginGame(player) {
   dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
-  takeTurn()
+  beginNextTurn()
 }
 
 function placePlayerTwoShips(player) {
@@ -77,11 +77,12 @@ function targetHoverCallback(e) {
 }
 
 function targetPlacementCallback(e) {
-  console.log(umpire.getCurrentOpponent())
-  console.log(umpire.getCurrentPlayer())
-
   removeTargetListeners()
   const cell = e.target
+  placeTarget(cell)
+}
+
+function placeTarget(cell) {
   // Check where the ships are and whether the chosen cell has hit a ship
   const shipPositions = umpire.getCurrentOpponent().allShipPositions()
   const turnOutcome = umpire.checkHit(cell, shipPositions)
@@ -93,7 +94,7 @@ function targetPlacementCallback(e) {
   if (umpire.checkVictoryConditions()) console.log('game is won')
   else {
     umpire.switchPlayers()
-    takeTurn()
+    beginNextTurn()
   }
 }
 
@@ -158,8 +159,14 @@ function removeTargetListeners() {
   })
 }
 
-function takeTurn() {
+function beginNextTurn() {
   const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
+  const player = umpire.getCurrentPlayer()
+  if (umpire.getCurrentPlayer().getPlayerType() === 'human') takeTurn(currentTargetBoard)
+  else aiTakeTurn(currentTargetBoard, player)
+}
+
+function takeTurn(currentTargetBoard) {
   const boardCells = document.querySelectorAll(`.${currentTargetBoard} .row .cell`)
   boardCells.forEach((cell) => {
     if (!cell.classList.contains('chosen')) {
@@ -168,6 +175,17 @@ function takeTurn() {
       cell.addEventListener('click', targetPlacementCallback)
     }
   })
+}
+
+function aiTakeTurn(currentTargetBoard, player) {
+  let spaceAvailable = false
+  while (!spaceAvailable) {
+    const cell = player.takeAiTurn(currentTargetBoard)
+    if (!cell.classList.contains('chosen')) {
+      spaceAvailable = true
+      placeTarget(cell)
+    }
+  }
 }
 
 gameSetupListeners()
