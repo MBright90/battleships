@@ -26,7 +26,9 @@ class Brain {
     return findCell(board, randomX, randomY)
   }
 
-  setPreviousTurn()
+  setPreviousTurn(cell) {
+    this.previousTurn = cell
+  }
 }
 
 module.exports = Brain
