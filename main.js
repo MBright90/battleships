@@ -154,9 +154,9 @@ eval("const utilities = (__webpack_require__(/*! ./utilities */ \"./src/modules/
 /*!********************************!*\
   !*** ./src/modules/aiBrain.js ***!
   \********************************/
-/***/ (() => {
+/***/ ((module) => {
 
-eval("throw new Error(\"Module parse failed: Unexpected token (30:0)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n| \\n|   setPreviousTurn()\\n> }\\n| \\n| module.exports = Brain\");\n\n//# sourceURL=webpack://battleships/./src/modules/aiBrain.js?");
+eval("// *************** //\n// Brain utilities //\n// *************** //\n\nfunction generateRandom(maxNum) {\n  return Math.floor(Math.random() * maxNum)\n}\n\nfunction findCell(boardName, x, y) {\n  return document.querySelector(`.${boardName} .row .cell[data-x-pos=\"${x}\"][data-y-pos=\"${y}\"]`)\n}\n\n// *********** //\n// Brain class //\n// *********** //\n\nclass Brain {\n  constructor() {\n    this.previousTurn = null\n  }\n\n  chooseSpace(board) {\n    let cell\n    const randomX = generateRandom(10)\n    const randomY = generateRandom(10)\n    return findCell(board, randomX, randomY)\n  }\n\n  setPreviousTurn(cell) {\n    this.previousTurn = cell\n  }\n}\n\nmodule.exports = Brain\n\n\n//# sourceURL=webpack://battleships/./src/modules/aiBrain.js?");
 
 /***/ }),
 
