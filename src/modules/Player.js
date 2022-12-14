@@ -133,7 +133,7 @@ class Player {
   }
 
   takeAiTurn(opponentBoard) {
-    this.brain.chooseSpace(opponentBoard)
+    return this.brain.chooseSpace(opponentBoard)
   }
 }
 
