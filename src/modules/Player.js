@@ -40,8 +40,13 @@ class Player {
     }
   }
 
+  #initiateBrain() {
+    this.brain = new Brain()
+  }
+
   setPlayerType(playerType) {
     this.playerType = playerType
+    if (this.playerType === 'ai') this.#initiateBrain()
   }
 
   // **************** //
@@ -127,10 +132,6 @@ class Player {
   // ********************** //
   // ai brain communication //
   // ********************** //
-
-  initiateBrain() {
-    this.brain = new Brain()
-  }
 
   takeAiTurn(opponentBoard) {
     return this.brain.chooseSpace(opponentBoard)
