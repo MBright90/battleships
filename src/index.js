@@ -180,7 +180,7 @@ function takeTurn(currentTargetBoard) {
 function aiTakeTurn(currentTargetBoard, player) {
   let spaceAvailable = false
   while (!spaceAvailable) {
-    const cell = player.takeAiTurn(currentTargetBoard)
+    const cell = player.simulateAiTurn(currentTargetBoard)
     if (!cell.classList.contains('chosen')) {
       spaceAvailable = true
       placeTarget(cell)
