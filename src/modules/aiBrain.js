@@ -4,7 +4,7 @@
 
 function generateRandom(maxNum) {
   // + 1 ensures number can include max and disregard 0
-  return Math.floor(Math.random() * maxNum) + 1
+  return Math.floor(Math.random() * maxNum)
 }
 
 function findCell(boardName, x, y) {
