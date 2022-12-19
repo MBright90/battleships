@@ -23,6 +23,7 @@ class Brain {
   chooseSpace(board) {
     const randomX = generateRandom(10) + 1
     const randomY = generateRandom(10) + 1
+    console.log(randomX, randomY)
     return findCell(board, randomX, randomY)
   }
 
