@@ -133,7 +133,7 @@ class Player {
   // ai brain communication //
   // ********************** //
 
-  takeAiTurn(opponentBoard) {
+  simulateAiTurn(opponentBoard) {
     return this.brain.chooseSpace(opponentBoard)
   }
 }
