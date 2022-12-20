@@ -25,8 +25,8 @@ function aiPlaceShip(player) {
     const simulatedAxis = placementArr[1]
 
     if (umpire.isAvailable(cell, player, currentShip, currentPositions, simulatedAxis)) {
-      const cellPositions = dom.placeShip(player, cell, currentShip, simulatedAxis)
-      player.addShipsPositions(cellPositions, currentShip.name)
+      const cellPositions = dom.placeShip(player, cell, currentShip, simulatedAxis, 'ai')
+      player.addShipPosition(cellPositions, currentShip.name)
       spaceAvailable = true
     }
   }
