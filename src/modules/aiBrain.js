@@ -29,7 +29,7 @@ class Brain {
 
   chooseShipPosition(board) {
     const cell = this.chooseSpace(board)
-    const randomAxis = this.axisArray[generateRandom(2)]
+    const randomAxis = this.axisArray[generateRandom(2) - 1]
     return [cell, randomAxis]
   }
 
