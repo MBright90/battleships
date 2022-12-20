@@ -10,6 +10,40 @@ const playerTwo = new Player('player-two-board')
 const umpire = new Umpire(playerOne, playerTwo)
 let axis = 'x'
 
+// ************ //
+// ai functions //
+// ************ //
+
+function aiPlaceShip(player) {
+  const currentShip = player.getCurrentShip()
+  const currentPositions = player.allShipPositions()
+
+  let spaceAvailable = false
+  while (!spaceAvailable) {
+    const placementArr = player.simulateShipPlacement(player.getBoardName()) // [cell, axis]
+    const cell = placementArr[0]
+    const simulatedAxis = placementArr[1]
+
+    if (umpire.isAvailable(cell, player, currentShip, currentPositions, simulatedAxis)) {
+      const cellPositions = dom.placeShip(player, cell, currentShip, simulatedAxis)
+      player.addShipsPositions(cellPositions, currentShip.name)
+      spaceAvailable = true
+    }
+  }
+  startNextPlacement()
+}
+
+function aiTakeTurn(currentTargetBoard, player) {
+  let spaceAvailable = false
+  while (!spaceAvailable) {
+    const cell = player.simulateAiTurn(currentTargetBoard)
+    if (!cell.classList.contains('chosen')) {
+      spaceAvailable = true
+      placeTarget(cell)
+    }
+  }
+}
+
 // ********* //
 // Callbacks //
 // ********* //
@@ -38,7 +72,8 @@ function checkHitOutcome(cell) {
 function startNextPlacement() {
   const player = umpire.getCurrentPlayer()
   // If there are still current player ships to place, begin process
-  if (player.getNextShip()) addHoverListeners(player)
+  if (player.getNextShip() && player.getPlayerType() === 'human') addHoverListeners(player)
+  else if (player.getNextShip()) aiPlaceShip(player)
   else if (player === playerTwo) {
     // If player two has placed all ships, start game
     beginGame(player)
@@ -175,17 +210,6 @@ function takeTurn(currentTargetBoard) {
       cell.addEventListener('click', targetPlacementCallback)
     }
   })
-}
-
-function aiTakeTurn(currentTargetBoard, player) {
-  let spaceAvailable = false
-  while (!spaceAvailable) {
-    const cell = player.simulateAiTurn(currentTargetBoard)
-    if (!cell.classList.contains('chosen')) {
-      spaceAvailable = true
-      placeTarget(cell)
-    }
-  }
 }
 
 gameSetupListeners()
