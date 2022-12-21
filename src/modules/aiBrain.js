@@ -21,6 +21,10 @@ class Brain {
     this.axisArray = ['x', 'y']
   }
 
+  setPreviousTurn(cell) {
+    this.previousTurn = cell
+  }
+
   chooseSpace(board) {
     const randomX = generateRandom(10)
     const randomY = generateRandom(10)
@@ -31,10 +35,6 @@ class Brain {
     const cell = this.chooseSpace(board)
     const randomAxis = this.axisArray[generateRandom(2) - 1]
     return [cell, randomAxis]
-  }
-
-  setPreviousTurn(cell) {
-    this.previousTurn = cell
   }
 }
 
