@@ -71,6 +71,10 @@ footer {
     justify-content: center;
 }
 
+.hit {
+    background-color: rgba(200, 95, 95, 0.7);
+}
+
 /***************/
 /* Ship images */
 /***************/
