@@ -26,9 +26,15 @@ class Brain {
   }
 
   chooseSpace(board) {
+    let cell
+    // if (last hit != fullShipDown) cell = cell next to it
+    // else {
     const randomX = generateRandom(10)
     const randomY = generateRandom(10)
-    return findCell(board, randomX, randomY)
+    cell = findCell(board, randomX, randomY)
+    // }
+
+    return cell
   }
 
   chooseShipPosition(board) {
