@@ -129,7 +129,6 @@ const dom = (() => {
   function placeTakenTurn(cell, outcome) {
     cell.classList.add('chosen')
     if (outcome) cell.classList.add('hit')
-    else cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
   }
 
   // **************** //
