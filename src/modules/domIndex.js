@@ -90,15 +90,15 @@ const dom = (() => {
       // Check that correct length and no taken spaces within the ships length worth of cells
       // If space is available color in gray
       cellArray.forEach((cell) => {
-        if (!cell.style.backgroundColor && event.type === 'mouseover') cell.style.backgroundColor = 'rgba(180, 180, 180, 0.5)'
-        else cell.style.backgroundColor = ''
+        if (!cell.classList.contains('hovered') && event.type === 'mouseover') cell.classList.add('hovered')
+        else cell.classList.remove('hovered')
       })
     } else {
       // If the correct length is unavailable or there is a taken space within the ships length
       // worth of cells, color the array in red
       cellArray.forEach((cell) => {
-        if (!cell.style.backgroundColor) cell.style.backgroundColor = 'rgba(200, 95, 95, 0.7)'
-        else cell.style.backgroundColor = ''
+        if (!cell.classList.contains('unavailable')) cell.classList.add('unavailable')
+        else cell.classList.remove('unavailable')
       })
     }
   }
