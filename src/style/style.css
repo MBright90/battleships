@@ -71,6 +71,10 @@ footer {
     justify-content: center;
 }
 
+.chosen {
+    background-color: 'rgba(180, 180, 180, 0.5)';
+}
+
 .hit {
     background-color: rgba(200, 95, 95, 0.7);
 }
