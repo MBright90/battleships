@@ -150,7 +150,7 @@ function changeAxisListener() {
 function removeHoverListeners(player) {
   const boardCells = document.querySelectorAll(`.${player.getBoardName()} .row .cell`)
   boardCells.forEach((cell) => {
-    if (cell.style.backgroundColor) cell.style.backgroundColor = ''
+    cell.classList.remove('hovered', 'unavailable')
     cell.removeEventListener('mouseover', boardPlacementCallback)
     cell.removeEventListener('mouseout', boardPlacementCallback)
     cell.removeEventListener('click', placeShipCallback)
