@@ -83,14 +83,15 @@ const dom = (() => {
 
     const cellArray = utilities.createCellArray(event.target, boardName, shipLength, axis)
     // Clear the array of colored cells when mouse leaves
-    if (event.type === 'mouseout') cellArray.forEach((cell) => { cell.style.backgroundColor = '' })
+    if (event.type === 'mouseout') cellArray.forEach((cell) => { cell.classList.remove('hovered', 'unavailable') })
     else if (cellArray.length === shipLength
       && !cellArray.some((cell) => currentPositions.includes(cell))
     ) {
       // Check that correct length and no taken spaces within the ships length worth of cells
       // If space is available color in gray
       cellArray.forEach((cell) => {
-        if (!cell.classList.contains('hovered') && event.type === 'mouseover') cell.classList.add('hovered')
+        if ((!cell.classList.contains('hovered') || !cell.classList.contains('unavailable'))
+          && event.type === 'mouseover') cell.classList.add('hovered')
         else cell.classList.remove('hovered')
       })
     } else {
