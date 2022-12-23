@@ -18,7 +18,7 @@ function findCell(boardName, x, y) {
 class Brain {
   constructor() {
     this.currentlyHunting = false
-    this.currentHuntPlacements = []
+    this.currentHuntPositions = []
   }
 
   // Ship hunting functions used when part of a ship is located //
@@ -35,15 +35,19 @@ class Brain {
     this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
   }
 
-  huntShipPosition() {
+  resetHuntPositions() {
+    this.currentHuntPositions = []
+  }
 
+  huntShipPosition() {
+    console.log('this is a ship position')
   }
 
   // General position choosing functions //
 
   chooseSpace(board) {
     let cell
-    if (this.currentlyHunting) cell = huntShipPosition()
+    if (this.currentlyHunting) cell = this.huntShipPosition()
     else {
       const randomX = generateRandom(10)
       const randomY = generateRandom(10)
