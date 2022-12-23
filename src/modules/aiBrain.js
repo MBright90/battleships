@@ -17,29 +17,46 @@ function findCell(boardName, x, y) {
 
 class Brain {
   constructor() {
-    this.previousTurn = null
-    this.axisArray = ['x', 'y']
+    this.currentlyHunting = false
+    this.currentHuntPlacements = []
   }
 
-  setPreviousTurn(cell) {
-    this.previousTurn = cell
+  // Ship hunting functions used when part of a ship is located //
+
+  setHuntingTrue() {
+    this.currentlyHunting = true
   }
+
+  endCurrentlyHunting() {
+    this.currentlyHunting = false
+  }
+
+  addHuntPosition(cell) {
+    this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
+  }
+
+  huntShipPosition() {
+
+  }
+
+  // General position choosing functions //
 
   chooseSpace(board) {
     let cell
-    // if (last hit != fullShipDown) cell = cell next to it
-    // else {
-    const randomX = generateRandom(10)
-    const randomY = generateRandom(10)
-    cell = findCell(board, randomX, randomY)
-    // }
+    if (this.currentlyHunting) cell = huntShipPosition()
+    else {
+      const randomX = generateRandom(10)
+      const randomY = generateRandom(10)
+      cell = findCell(board, randomX, randomY)
+    }
 
     return cell
   }
 
   chooseShipPosition(board) {
+    const axisArray = ['x', 'y']
     const cell = this.chooseSpace(board)
-    const randomAxis = this.axisArray[generateRandom(2) - 1]
+    const randomAxis = axisArray[generateRandom(2) - 1]
     return [cell, randomAxis]
   }
 }
