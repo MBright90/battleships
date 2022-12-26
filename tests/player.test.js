@@ -100,3 +100,16 @@ test('Excludes ships with no position yet set', () => {
         'de1', 'de2',
     ])
 })
+
+//////////////////////////
+// Testing ai functions //
+//////////////////////////
+
+test('Adds a position to the currentHunPositions array each time', () => {
+    const player = new Player()
+    player.setPlayerType('ai')
+    player.addHuntPosition('position 1')
+    player.addHuntPosition('position 2')
+
+    expect(player.brain.currentHuntPlacements).toStrictEqual(['position 1', 'position 2'])
+})
