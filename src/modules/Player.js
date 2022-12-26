@@ -140,6 +140,10 @@ class Player {
   simulateAiTurn(opponentBoard) {
     return this.brain.chooseSpace(opponentBoard)
   }
+
+  setHunting() {
+    this.brain.setHuntingTrue()
+  }
 }
 
 module.exports = Player
