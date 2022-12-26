@@ -39,6 +39,10 @@ function aiTakeTurn(currentTargetBoard, player) {
     const cell = player.simulateAiTurn(currentTargetBoard)
     if (!cell.classList.contains('chosen')) {
       spaceAvailable = true
+
+      // Checks whether the turn has hit a ship space and sets hunting to true if that is the case
+      const turnOutcome = umpire.checkHit(cell)
+      if (turnOutcome) player.
       placeTarget(cell)
     }
   }
