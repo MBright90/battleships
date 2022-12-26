@@ -18,7 +18,7 @@ function findCell(boardName, x, y) {
 class Brain {
   constructor() {
     this.currentlyHunting = false
-    this.currentHuntPositions = []
+    this.currentHuntPlacements = []
   }
 
   // Ship hunting functions used when part of a ship is located //
