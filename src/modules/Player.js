@@ -144,6 +144,10 @@ class Player {
   setHunting() {
     this.brain.setHuntingTrue()
   }
+
+  addHuntPosition(position) {
+    this.brain.addHuntPosition(position)
+  }
 }
 
 module.exports = Player
