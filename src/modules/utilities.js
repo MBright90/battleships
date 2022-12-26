@@ -13,4 +13,4 @@ const utilities = (() => {
   return { createCellArray }
 })()
 
-export default utilities
+module.exports = utilities
