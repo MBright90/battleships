@@ -140,7 +140,11 @@ class Player {
   simulateAiTurn(opponentBoard) {
     let chosenSpace
     if (this.brain.getHuntingStatus()) {
-      // Logic for hunting here
+      let spaceAvailable = true
+      while (!spaceAvailable) {
+        
+        spaceAvailable = false
+      }
     }
     else chosenSpace = this.brain.chooseSpace(opponentBoard)
     return chosenSpace
