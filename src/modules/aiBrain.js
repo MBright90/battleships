@@ -23,24 +23,24 @@ class Brain {
 
   // Ship hunting functions used when part of a ship is located //
 
-  setHuntingTrue() {
-    this.currentlyHunting = true
+  getHuntingStatus() {
+    return this.currentlyHunting
   }
 
-  endCurrentlyHunting() {
-    this.currentlyHunting = false
+  setHuntingTrue() {
+    this.currentlyHunting = true
   }
 
   addHuntPosition(cell) {
     this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
   }
 
-  resetHuntPositions() {
+  endCurrentHunt() {
+    this.currentlyHunting = false
     this.currentHuntPositions = []
   }
 
-  huntShipPosition() {
-    console.log('this is a ship position')
+  huntShipSpace() {
   }
 
   // General position choosing functions //
