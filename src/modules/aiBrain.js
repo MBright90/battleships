@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 // *************** //
 // Brain utilities //
 // *************** //
@@ -88,10 +89,17 @@ class Brain {
   }
 
   huntShipSpace(board) {
-    const nextShipSpace = null
-    this.currentHuntHit.forEach((cell) => {
+    let nextShipSpace = null
+    this.currentHuntHit.every((cell) => {
+      let continueFunc = true
       const availableSpaces = this.#searchCell(cell, board)
+      if (availableSpaces.length > 0) {
+        nextShipSpace = availableSpaces[0]
+        continueFunc = false
+      } else continueFunc = true
+      return continueFunc
     })
+    return nextShipSpace
   }
 
   // General position choosing functions //
