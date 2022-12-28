@@ -47,7 +47,7 @@ class Brain {
     this.currentHuntPositions = []
   }
 
-  checkHuntAxis() {
+  #checkHuntAxis() {
     if (!this.currentHuntAxis) {
       try {
         if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
@@ -59,13 +59,13 @@ class Brain {
     return this.currentHuntAxis
   }
 
-  searchCells(cell, board) {
+  #searchCell(cell, board) {
     const manipulationArr = [1, -1]
     const xCoord = cell.dataset.xPos
     const yCoord = cell.dataset.yPos
 
     const availableSpaces = []
-    if (this.currentHuntAxis !== 'y') {
+    if (this.#checkHuntAxis() !== 'y') {
       manipulationArr.filter((manipulation) => {
         const newCoord = xCoord + manipulation
         const newCell = findCell(board, newCoord, yCoord)
@@ -74,7 +74,7 @@ class Brain {
       })
     }
 
-    if (this.currentHuntAxis !== 'x'
+    if (this.#checkHuntAxis() !== 'x'
         && availableSpaces.length <= 0) {
       manipulationArr.filter((manipulation) => {
         const newCoord = yCoord + manipulation
@@ -90,7 +90,7 @@ class Brain {
   huntShipSpace(board) {
     const nextShipSpace = null
     this.currentHuntHit.forEach((cell) => {
-      
+      const availableSpaces = this.#searchCell(cell, board)
     })
   }
 
