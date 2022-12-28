@@ -59,35 +59,47 @@ class Brain {
     return this.currentHuntAxis
   }
 
+  searchCells(cell, board) {
+    const manipulationArr = [1, -1]
+    const xCoord = cell.dataset.xPos
+    const yCoord = cell.dataset.yPos
+
+    const availableSpaces = []
+    if (this.currentHuntAxis !== 'y') {
+      manipulationArr.filter((manipulation) => {
+        const newCoord = xCoord + manipulation
+        const newCell = findCell(board, newCoord, yCoord)
+        if (!this.currentHuntPlacements.includes(newCell)) return true
+        return false
+      })
+    }
+
+    if (this.currentHuntAxis !== 'x'
+        && availableSpaces.length <= 0) {
+      manipulationArr.filter((manipulation) => {
+        const newCoord = yCoord + manipulation
+        const newCell = findCell(board, xCoord, newCoord)
+        if (!this.currentHuntPlacements.includes(newCell)) return true
+        return false
+      })
+    }
+    console.log(availableSpaces)
+    return availableSpaces
+  }
+
   huntShipSpace(board) {
     const nextShipSpace = null
-    const manipulationArr = [1, -1]
-
-    this.currentHuntHits.forEach((cell) => {
-      const xCoord = cell.dataset.xPos
-      const yCoord = cell.dataset.yPos
-      if (this.currentHuntAxis !== 'y') {
-        manipulationArr.forEach((manipulation) => {
-          const newCoord = xCoord + manipulation
-          const newCell = findCell(board, newCoord, yCoord)
-          if (this.currentHuntPositions.includes(newCell)) break
-        })
-      }
+    this.currentHuntHit.forEach((cell) => {
+      
     })
   }
 
   // General position choosing functions //
 
   chooseSpace(board) {
-    let cell
-    if (this.currentlyHunting) cell = this.huntShipSpace(board)
-    else {
-      const randomX = generateRandom(10)
-      const randomY = generateRandom(10)
-      cell = findCell(board, randomX, randomY)
-    }
-
-    return cell
+    const randomX = generateRandom(10)
+    const randomY = generateRandom(10)
+    return findCell(board, randomX, randomY)
   }
 
   chooseShipPosition(board) {
