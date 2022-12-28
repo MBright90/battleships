@@ -18,6 +18,7 @@ function findCell(boardName, x, y) {
 class Brain {
   constructor() {
     this.currentlyHunting = false
+    this.currentHuntHits = []
     this.currentHuntPlacements = []
   }
 
@@ -29,6 +30,10 @@ class Brain {
 
   setHuntingTrue() {
     this.currentlyHunting = true
+  }
+
+  addHuntHit(cell) {
+    this.currentHuntHits[this.currentHuntHits.length] = cell
   }
 
   addHuntPosition(cell) {
