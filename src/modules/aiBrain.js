@@ -20,6 +20,7 @@ class Brain {
     this.currentlyHunting = false
     this.currentHuntHits = []
     this.currentHuntPlacements = []
+    this.currentHuntAxis = null
   }
 
   // Ship hunting functions used when part of a ship is located //
@@ -42,17 +43,44 @@ class Brain {
 
   endCurrentHunt() {
     this.currentlyHunting = false
+    this.currentHuntHits = []
     this.currentHuntPositions = []
   }
 
-  huntShipSpace() {
+  checkHuntAxis() {
+    if (!this.currentHuntAxis) {
+      try {
+        if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
+        if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
+      } catch {
+        console.log('No axis set')
+      }
+    }
+    return this.currentHuntAxis
+  }
+
+  huntShipSpace(board) {
+    const nextShipSpace = null
+    const manipulationArr = [1, -1]
+
+    this.currentHuntHits.forEach((cell) => {
+      const xCoord = cell.dataset.xPos
+      const yCoord = cell.dataset.yPos
+      if (this.currentHuntAxis !== 'y') {
+        manipulationArr.forEach((manipulation) => {
+          const newCoord = xCoord + manipulation
+          const newCell = findCell(board, newCoord, yCoord)
+          if (this.currentHuntPositions.includes(newCell)) break
+        })
+      }
+    })
   }
 
   // General position choosing functions //
 
   chooseSpace(board) {
     let cell
-    if (this.currentlyHunting) cell = this.huntShipPosition()
+    if (this.currentlyHunting) cell = this.huntShipSpace(board)
     else {
       const randomX = generateRandom(10)
       const randomY = generateRandom(10)
