@@ -138,15 +138,21 @@ class Player {
   }
 
   simulateAiTurn(opponentBoard) {
-    return this.brain.chooseSpace(opponentBoard)
+    let chosenSpace
+    if (this.brain.getHuntingStatus()) {
+      // Logic for hunting here
+    }
+    else chosenSpace = this.brain.chooseSpace(opponentBoard)
+    return chosenSpace
   }
 
   setHunting() {
     this.brain.setHuntingTrue()
   }
 
-  addHuntPosition(position) {
-    this.brain.addHuntPosition(position)
+  logHuntStatus(cell, shipPositions) {
+    if (cell.classList.contains('hit')) this.brain.addHuntHit(cell)
+    this.brain.addHuntPosition(cell)
   }
 }
 
