@@ -152,11 +152,8 @@ class Player {
     return chosenSpace
   }
 
-  setHunting() {
+  setHuntStatus(cell) {
     this.brain.setHuntingTrue()
-  }
-
-  logHuntStatus(cell) {
     if (cell.classList.contains('hit')) this.brain.addHuntHit(cell)
     this.brain.addHuntPosition(cell)
   }
