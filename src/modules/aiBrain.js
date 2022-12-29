@@ -90,7 +90,7 @@ class Brain {
 
   huntShipSpace(board) {
     let nextShipSpace = null
-    this.currentHuntHit.every((cell) => {
+    this.currentHuntHits.every((cell) => {
       let continueFunc = true
       const availableSpaces = this.#searchCell(cell, board)
       if (availableSpaces.length > 0) {
