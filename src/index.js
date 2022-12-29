@@ -37,6 +37,7 @@ function aiTakeTurn(currentTargetBoard, player) {
   let spaceAvailable = false
   while (!spaceAvailable) {
     const cell = player.simulateAiTurn(currentTargetBoard)
+    console.log(cell)
     if (!cell.classList.contains('chosen')) {
       spaceAvailable = true
 
