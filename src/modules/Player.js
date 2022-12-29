@@ -156,7 +156,7 @@ class Player {
     this.brain.setHuntingTrue()
   }
 
-  logHuntStatus(cell, shipPositions) {
+  logHuntStatus(cell) {
     if (cell.classList.contains('hit')) this.brain.addHuntHit(cell)
     this.brain.addHuntPosition(cell)
   }
