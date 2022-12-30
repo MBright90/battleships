@@ -140,7 +140,6 @@ class Player {
   simulateAiTurn(opponentBoard) {
     let chosenSpace
     if (this.brain.getHuntingStatus()) {
-      console.log('hunting')
       chosenSpace = this.brain.huntShipSpace(opponentBoard)
     } else {
       let spaceAvailable = false
@@ -154,7 +153,11 @@ class Player {
 
   setHuntStatus(cell) {
     this.brain.setHuntingTrue()
-    if (cell.classList.contains('hit')) this.brain.addHuntHit(cell)
+    this.brain.addHuntHit(cell)
+    this.brain.addHuntPosition(cell)
+  }
+
+  addHuntPlacement(cell) {
     this.brain.addHuntPosition(cell)
   }
 }
