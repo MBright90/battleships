@@ -64,8 +64,8 @@ class Brain {
 
   #searchCell(cell, board) {
     const manipulationArr = [1, -1]
-    const xCoord = cell.dataset.xPos
-    const yCoord = cell.dataset.yPos
+    const xCoord = parseInt(cell.dataset.xPos, 10)
+    const yCoord = parseInt(cell.dataset.yPos, 10)
 
     const availableSpaces = []
     if (this.#checkHuntAxis() !== 'y') {
@@ -92,6 +92,7 @@ class Brain {
 
   huntShipSpace(board) {
     let nextShipSpace = null
+    console.log(this.currentHuntHits)
     this.currentHuntHits.every((cell) => {
       console.log(cell)
       let continueFunc = true
