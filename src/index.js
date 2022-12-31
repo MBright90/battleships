@@ -42,7 +42,6 @@ function aiTakeTurn(currentTargetBoard, player) {
       spaceAvailable = true
 
       // Checks whether the turn has hit a ship space and sets hunting to true if that is the case
-      console.log(cell)
       const shipPositions = umpire.getCurrentOpponent().allShipPositions()
       const turnOutcome = umpire.checkHit(cell, shipPositions)
       if (turnOutcome) player.setHuntStatus(cell)
