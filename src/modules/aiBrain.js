@@ -52,12 +52,8 @@ class Brain {
 
   #checkHuntAxis() {
     if (!this.currentHuntAxis) {
-      try {
-        if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
-        if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
-      } catch {
-        console.log('No axis set')
-      }
+      if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
+      else if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
     }
     return this.currentHuntAxis
   }
@@ -66,18 +62,20 @@ class Brain {
     const manipulationArr = [1, -1]
     const xCoord = parseInt(cell.dataset.xPos, 10)
     const yCoord = parseInt(cell.dataset.yPos, 10)
+    const huntAxis = this.#checkHuntAxis()
 
     const availableSpaces = []
-    if (this.#checkHuntAxis() !== 'y') {
+    if (huntAxis !== 'y') {
       manipulationArr.filter((manipulation) => {
         const newCoord = xCoord + manipulation
         const newCell = findCell(board, newCoord, yCoord)
+        console.log(newCell)
         if (!this.currentHuntPlacements.includes(newCell)) return true
         return false
       })
     }
 
-    if (this.#checkHuntAxis() !== 'x'
+    if (huntAxis !== 'x'
         && availableSpaces.length <= 0) {
       manipulationArr.filter((manipulation) => {
         const newCoord = yCoord + manipulation
@@ -86,7 +84,6 @@ class Brain {
         return false
       })
     }
-    console.log(availableSpaces)
     return availableSpaces
   }
 
@@ -94,7 +91,6 @@ class Brain {
     let nextShipSpace = null
     console.log(this.currentHuntHits)
     this.currentHuntHits.every((cell) => {
-      console.log(cell)
       let continueFunc = true
       const availableSpaces = this.#searchCell(cell, board)
       console.log(availableSpaces)
