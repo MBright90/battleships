@@ -52,10 +52,16 @@ class Brain {
 
   #checkHuntAxis() {
     if (!this.currentHuntAxis) {
-      if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
-      else if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
+      if (this.currentHuntHits.length >= 2) {
+        if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
+        else if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
+      }
     }
     return this.currentHuntAxis
+  }
+
+  #filterTakenSpaces(arr) {
+    return arr.filter((item) => item !== null)
   }
 
   #searchCell(cell, board) {
@@ -66,23 +72,26 @@ class Brain {
 
     const availableSpaces = []
     if (huntAxis !== 'y') {
-      manipulationArr.filter((manipulation) => {
+      // Filter through the manipulation Arr to find cells for each manipulation
+      const yCells = manipulationArr.map((manipulation) => {
         const newCoord = xCoord + manipulation
         const newCell = findCell(board, newCoord, yCoord)
-        console.log(newCell)
-        if (!this.currentHuntPlacements.includes(newCell)) return true
-        return false
+        if (!this.currentHuntPlacements.includes(newCell)) return newCell
+        return null
       })
+      availableSpaces[availableSpaces.length] = [...yCells]
     }
 
+    // Repeat fo above for y axis movements
     if (huntAxis !== 'x'
         && availableSpaces.length <= 0) {
-      manipulationArr.filter((manipulation) => {
+      const xCells = manipulationArr.map((manipulation) => {
         const newCoord = yCoord + manipulation
         const newCell = findCell(board, xCoord, newCoord)
-        if (!this.currentHuntPlacements.includes(newCell)) return true
-        return false
+        if (!this.currentHuntPlacements.includes(newCell)) return newCell
+        return null
       })
+      availableSpaces[availableSpaces.length] = [...xCells]
     }
     return availableSpaces
   }
