@@ -41,7 +41,6 @@ class Brain {
 
   addHuntPosition(cell) {
     this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
-    console.log(this.currentHuntPlacements)
   }
 
   endCurrentHunt() {
