@@ -11,7 +11,8 @@ class Brain {
   // Brain utilities
 
   #generateRandom(maxNum) {
-  // + 1 ensures number can include max and disregard 0
+    if (maxNum === 0) return 0
+    // + 1 ensures number can include max and disregard 0
     return Math.floor(Math.random() * maxNum) + 1
   }
 
@@ -39,7 +40,10 @@ class Brain {
 
   addHuntHit(cell) {
     this.currentHuntHits[this.currentHuntHits.length] = cell
-    console.log(this.currentHuntHits)
+  }
+
+  getHuntHits() {
+    return this.currentHuntHits
   }
 
   addHuntPosition(cell) {
@@ -54,13 +58,11 @@ class Brain {
 
   #checkHuntAxis() {
     if (!this.currentHuntAxis) {
-      console.log(this.currentHuntHits)
       if (this.currentHuntHits.length >= 2) {
         if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'x'
         else if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'y'
       }
     }
-    console.log(this.currentHuntAxis)
     return this.currentHuntAxis
   }
 
