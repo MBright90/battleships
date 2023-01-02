@@ -41,8 +41,10 @@ function aiTakeTurn(currentTargetBoard, player) {
       spaceAvailable = true
 
       // Checks whether the turn has hit a ship space and sets hunting to true if that is the case
-      const shipPositions = umpire.getCurrentOpponent().allShipPositions()
+      const opponent = umpire.getCurrentOpponent()
+      const shipPositions = opponent.allShipPositions()
       const turnOutcome = umpire.checkHit(cell, shipPositions)
+
       if (turnOutcome) player.setHuntStatus(cell)
       if (player.checkHunting()) player.addHuntPlacement(cell)
       placeTarget(cell)
@@ -73,6 +75,7 @@ function checkHitOutcome(cell) {
   // Check if ship is complete, if true, shipStatus becomes the head cell of the ship
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
   if (shipStatus) dom.revealShip(shipStatus)
+  if (shipStatus && player.getPlayerType() === 'ai') player.endHunt()
 }
 
 function startNextPlacement() {
