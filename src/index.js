@@ -44,6 +44,7 @@ function aiTakeTurn(currentTargetBoard, player) {
       const shipPositions = umpire.getCurrentOpponent().allShipPositions()
       const turnOutcome = umpire.checkHit(cell, shipPositions)
       if (turnOutcome) player.setHuntStatus(cell)
+      if (player.checkHunting()) player.addHuntPlacement(cell)
       placeTarget(cell)
     }
   }
