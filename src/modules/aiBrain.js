@@ -1,20 +1,4 @@
 /* eslint-disable prefer-destructuring */
-// *************** //
-// Brain utilities //
-// *************** //
-
-function generateRandom(maxNum) {
-  // + 1 ensures number can include max and disregard 0
-  return Math.floor(Math.random() * maxNum) + 1
-}
-
-function findCell(boardName, x, y) {
-  return document.querySelector(`.${boardName} .row .cell[data-x-pos="${x}"][data-y-pos="${y}"]`)
-}
-
-// *********** //
-// Brain class //
-// *********** //
 
 class Brain {
   constructor() {
@@ -22,6 +6,25 @@ class Brain {
     this.currentHuntHits = []
     this.currentHuntPlacements = []
     this.currentHuntAxis = null
+  }
+
+  // Brain utilities
+
+  #generateRandom(maxNum) {
+  // + 1 ensures number can include max and disregard 0
+    return Math.floor(Math.random() * maxNum) + 1
+  }
+
+  #findCell(boardName, x, y) {
+    return document.querySelector(`.${boardName} .row .cell[data-x-pos="${x}"][data-y-pos="${y}"]`)
+  }
+
+  #unpackSearchArrays(...arrays) {
+    const returnArr = []
+    arrays.forEach((arr) => {
+      arr.forEach((item) => returnArr.push(item))
+    })
+    return returnArr
   }
 
   // Ship hunting functions used when part of a ship is located //
@@ -69,41 +72,41 @@ class Brain {
     const yCoord = parseInt(cell.dataset.yPos, 10)
     const huntAxis = this.#checkHuntAxis()
 
-    const availableSpaces = []
+    // Filter through the manipulation Arr to find cells for each manipulation in x axis
+    let xCells = []
     if (huntAxis !== 'y') {
-      // Filter through the manipulation Arr to find cells for each manipulation
-      const yCells = manipulationArr.map((manipulation) => {
+      xCells = manipulationArr.map((manipulation) => {
         const newCoord = xCoord + manipulation
-        const newCell = findCell(board, newCoord, yCoord)
+        const newCell = this.#findCell(board, newCoord, yCoord)
         if (!this.currentHuntPlacements.includes(newCell)) return newCell
         return null
       })
-      availableSpaces[availableSpaces.length] = [...yCells]
     }
 
-    // Repeat fo above for y axis movements
-    if (huntAxis !== 'x'
-        && availableSpaces.length <= 0) {
-      const xCells = manipulationArr.map((manipulation) => {
+    // Repeat above for y axis movements
+    let yCells = []
+    if (huntAxis !== 'x') {
+      yCells = manipulationArr.map((manipulation) => {
         const newCoord = yCoord + manipulation
-        const newCell = findCell(board, xCoord, newCoord)
+        const newCell = this.#findCell(board, xCoord, newCoord)
         if (!this.currentHuntPlacements.includes(newCell)) return newCell
         return null
       })
-      availableSpaces[availableSpaces.length] = [...xCells]
     }
+
+    // Amalgamate the xCells and yCells
+    const availableSpaces = this.unpackSearchArrays(xCells, yCells)
     return availableSpaces
   }
 
   huntShipSpace(board) {
     let nextShipSpace = null
-    console.log(this.currentHuntHits)
     this.currentHuntHits.every((cell) => {
       let continueFunc = true
       const availableSpaces = this.#searchCell(cell, board)
       console.log(availableSpaces)
       if (availableSpaces.length > 0) {
-        nextShipSpace = availableSpaces[0]
+        nextShipSpace = availableSpaces[this.#generateRandom(availableSpaces.length - 1)]
         continueFunc = false
       } else continueFunc = true
       return continueFunc
@@ -114,15 +117,15 @@ class Brain {
   // General position choosing functions //
 
   chooseSpace(board) {
-    const randomX = generateRandom(10)
-    const randomY = generateRandom(10)
-    return findCell(board, randomX, randomY)
+    const randomX = this.#generateRandom(10)
+    const randomY = this.#generateRandom(10)
+    return this.#findCell(board, randomX, randomY)
   }
 
   chooseShipPosition(board) {
     const axisArray = ['x', 'y']
     const cell = this.chooseSpace(board)
-    const randomAxis = axisArray[generateRandom(2) - 1]
+    const randomAxis = axisArray[this.#generateRandom(2) - 1]
     return [cell, randomAxis]
   }
 }
