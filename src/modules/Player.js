@@ -112,6 +112,7 @@ class Player {
     Object.keys(this.ships).forEach((ship) => {
       if (this.ships[ship].position.includes(cell)) targetShip = ship
     })
+    console.log(targetShip)
     return targetShip
   }
 
@@ -166,7 +167,11 @@ class Player {
     this.brain.addHuntPosition(cell)
   }
 
-  endHunting() {
+  getHuntHits() {
+    return this.brain.getHuntHits()
+  }
+
+  endHunt() {
     this.brain.endCurrentHunt()
   }
 }
