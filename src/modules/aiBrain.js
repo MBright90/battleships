@@ -95,7 +95,7 @@ class Brain {
     }
 
     // Amalgamate the xCells and yCells
-    const availableSpaces = this.unpackSearchArrays(xCells, yCells)
+    const availableSpaces = this.#unpackSearchArrays(xCells, yCells)
     return availableSpaces
   }
 
