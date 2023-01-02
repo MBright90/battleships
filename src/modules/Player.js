@@ -153,14 +153,21 @@ class Player {
     return chosenSpace
   }
 
+  checkHunting() {
+    return this.brain.getHuntingStatus()
+  }
+
   setHuntStatus(cell) {
     this.brain.setHuntingTrue()
     this.brain.addHuntHit(cell)
-    this.brain.addHuntPosition(cell)
   }
 
   addHuntPlacement(cell) {
     this.brain.addHuntPosition(cell)
+  }
+
+  endHunting() {
+    this.brain.endCurrentHunt()
   }
 }
 
