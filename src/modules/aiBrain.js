@@ -54,11 +54,13 @@ class Brain {
 
   #checkHuntAxis() {
     if (!this.currentHuntAxis) {
+      console.log(this.currentHuntHits)
       if (this.currentHuntHits.length >= 2) {
-        if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'x'
-        else if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'y'
+        if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'x'
+        else if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'y'
       }
     }
+    console.log(this.currentHuntAxis)
     return this.currentHuntAxis
   }
 
@@ -100,18 +102,19 @@ class Brain {
   }
 
   huntShipSpace(board) {
-    let nextShipSpace = null
-    this.currentHuntHits.every((cell) => {
-      let continueFunc = true
-      const availableSpaces = this.#searchCell(cell, board)
-      console.log(availableSpaces)
-      if (availableSpaces.length > 0) {
-        nextShipSpace = availableSpaces[this.#generateRandom(availableSpaces.length - 1)]
-        continueFunc = false
-      } else continueFunc = true
-      return continueFunc
+    const emptyTargetSpaces = []
+    this.currentHuntHits.forEach((hit) => {
+      const availableSpaces = this.#searchCell(hit, board)
+      const filteredSpaces = this.#filterTakenSpaces(availableSpaces)
+      // If there are any spaces available, add to the targets list
+      if (filteredSpaces.length > 0) {
+        filteredSpaces.forEach((space) => {
+          emptyTargetSpaces.push(space)
+        })
+      }
     })
-    return nextShipSpace
+    // Return a random choice from within the available choices
+    return emptyTargetSpaces[this.#generateRandom(emptyTargetSpaces.length - 1)]
   }
 
   // General position choosing functions //
