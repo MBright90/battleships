@@ -97,6 +97,7 @@ button:hover {
 
 .game-board {
     background-color: rgba(0, 255, 255, 0.3);
+    border: 3px solid rgb(235, 235, 235);
     display: grid;
     grid-auto-rows: 1fr;
 }
@@ -106,7 +107,7 @@ button:hover {
 } 
 
 .game-board .cell {
-    border: 1px solid gray;
+    border: 1px dashed rgb(235, 235, 235);
     height: 40px;
     width: 40px
 }
