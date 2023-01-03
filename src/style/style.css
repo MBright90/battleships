@@ -11,6 +11,10 @@ html, *, a {
 /* Initial layout styles */
 /*************************/
 
+body {
+    background-color: rgb(110, 110, 110);
+}
+
 .layout-wrapper {
     align-items: center;
     display: flex;
@@ -23,6 +27,8 @@ html, *, a {
 
 header {
     font-weight: bold;
+    top: 3%;
+    width: 100%;
 }
 
 .choices-buttons-container {
@@ -33,8 +39,18 @@ header {
 }
 
 footer {
+    bottom: 3%;
+}
+
+header, footer {
+    align-items: center;
+    background-color: rgb(60, 60, 60);
+    color: rgb(235, 235, 235);
+    display: flex;
+    justify-content: center;
+    padding: 5px;
     position: absolute;
-    bottom: 5px;
+    width: 100%;
 }
 
 /*********************/
