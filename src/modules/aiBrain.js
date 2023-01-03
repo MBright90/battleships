@@ -66,6 +66,13 @@ class Brain {
     return this.currentHuntAxis
   }
 
+  #swapAxis(currentAxis) {
+    // Is called when a ship comes across two or more ships besides each other and 
+    // cannot find a full ship
+    if (currentAxis === 'x') this.huntAxis = 'y'
+    else this.huntAxis = 'x'
+  }
+
   #filterTakenSpaces(arr) {
     return arr.filter((item) => item !== null)
   }
@@ -114,6 +121,7 @@ class Brain {
           emptyTargetSpaces.push(space)
         })
       }
+      else this.#swapAxis()
     })
     // Return a random choice from within the available choices
     return emptyTargetSpaces[this.#generateRandom(emptyTargetSpaces.length - 1)]
