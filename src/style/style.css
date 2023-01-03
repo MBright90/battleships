@@ -13,6 +13,7 @@ html, *, a {
 
 body {
     background-color: rgb(110, 110, 110);
+    letter-spacing: 2px;
 }
 
 .layout-wrapper {
@@ -27,8 +28,20 @@ body {
 
 header {
     font-weight: bold;
-    top: 3%;
+    top: 0;
     width: 100%;
+}
+
+.choices-container {
+    align-items: center;
+    color: rgb(235, 235, 235);
+    display: flex;
+    flex-direction: column;
+}
+
+.choices-container > p {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .choices-buttons-container {
@@ -39,7 +52,7 @@ header {
 }
 
 footer {
-    bottom: 3%;
+    bottom: 0;
 }
 
 header, footer {
@@ -48,9 +61,27 @@ header, footer {
     color: rgb(235, 235, 235);
     display: flex;
     justify-content: center;
-    padding: 5px;
+    padding: 10px;
     position: absolute;
     width: 100%;
+}
+
+button {
+    background-color: inherit;
+    border: 3px solid rgb(235, 235, 235);
+    color:rgb(235, 235, 235);
+    letter-spacing: 1px;
+    padding: 5px 3px;
+    width: 80px;
+
+    transition: .1s ease-in-out;
+    -webkit-transition: .1s ease-in-out;
+    -moz-transition: .1s ease-in-out;
+    -o-transition: .1s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 /*********************/
