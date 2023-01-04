@@ -4,7 +4,7 @@ class Brain {
   constructor() {
     this.currentlyHunting = false
     this.currentHuntHits = []
-    this.currentHuntPlacements = []
+    // this.currentHuntPlacements = []
     this.currentHuntAxis = null
   }
 
@@ -46,11 +46,14 @@ class Brain {
     return this.currentHuntHits
   }
 
-  addHuntPosition(cell) {
-    this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
-  }
+  // addHuntPosition(cell) {
+  //   this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
+  // }
 
-  endCurrentHunt() {
+  endHuntCheck() {
+    // Remove all huntHits associated with a sunk ship
+
+    // If huntHits are now empty, end the hunt
     this.currentlyHunting = false
     this.currentHuntHits = []
     this.currentHuntPositions = []
@@ -67,7 +70,7 @@ class Brain {
   }
 
   #swapAxis(currentAxis) {
-    // Is called when a ship comes across two or more ships besides each other and 
+    // Is called when a ship comes across two or more ships besides each other and
     // cannot find a full ship
     if (currentAxis === 'x') this.huntAxis = 'y'
     else this.huntAxis = 'x'
@@ -77,7 +80,7 @@ class Brain {
     return arr.filter((item) => item !== null)
   }
 
-  #searchCell(cell, board) {
+  #searchCell(cell, board, unavailableSpaces) {
     const manipulationArr = [1, -1]
     const xCoord = parseInt(cell.dataset.xPos, 10)
     const yCoord = parseInt(cell.dataset.yPos, 10)
@@ -89,7 +92,7 @@ class Brain {
       xCells = manipulationArr.map((manipulation) => {
         const newCoord = xCoord + manipulation
         const newCell = this.#findCell(board, newCoord, yCoord)
-        if (!this.currentHuntPlacements.includes(newCell)) return newCell
+        if (!unavailableSpaces.includes(newCell)) return newCell
         return null
       })
     }
@@ -110,18 +113,17 @@ class Brain {
     return availableSpaces
   }
 
-  huntShipSpace(board) {
+  huntShipSpace(board, unavailableSpaces) {
     const emptyTargetSpaces = []
     this.currentHuntHits.forEach((hit) => {
-      const availableSpaces = this.#searchCell(hit, board)
+      const availableSpaces = this.#searchCell(hit, board, unavailableSpaces)
       const filteredSpaces = this.#filterTakenSpaces(availableSpaces)
       // If there are any spaces available, add to the targets list
       if (filteredSpaces.length > 0) {
         filteredSpaces.forEach((space) => {
           emptyTargetSpaces.push(space)
         })
-      }
-      else this.#swapAxis()
+      } else this.#swapAxis()
     })
     // Return a random choice from within the available choices
     return emptyTargetSpaces[this.#generateRandom(emptyTargetSpaces.length - 1)]
