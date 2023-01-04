@@ -103,7 +103,7 @@ class Brain {
       yCells = manipulationArr.map((manipulation) => {
         const newCoord = yCoord + manipulation
         const newCell = this.#findCell(board, xCoord, newCoord)
-        if (!this.currentHuntPlacements.includes(newCell)) return newCell
+        if (!unavailableSpaces.includes(newCell)) return newCell
         return null
       })
     }
