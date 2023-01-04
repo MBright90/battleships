@@ -4,7 +4,6 @@ class Brain {
   constructor() {
     this.currentlyHunting = false
     this.currentHuntHits = []
-    // this.currentHuntPlacements = []
     this.currentHuntAxis = null
   }
 
@@ -45,10 +44,6 @@ class Brain {
   getHuntHits() {
     return this.currentHuntHits
   }
-
-  // addHuntPosition(cell) {
-  //   this.currentHuntPlacements[this.currentHuntPlacements.length] = cell
-  // }
 
   endHuntCheck() {
     // Remove all huntHits associated with a sunk ship
