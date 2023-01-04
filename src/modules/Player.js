@@ -137,11 +137,11 @@ class Player {
     return this.brain.chooseShipPosition(board)
   }
 
-  simulateAiTurn(opponentBoard) {
+  simulateAiTurn(opponentBoard, playersMoves) {
     let chosenSpace
     if (this.brain.getHuntingStatus()) {
       // Choose an unused space beside a hit where the ship hasn't been sunk
-      chosenSpace = this.brain.huntShipSpace(opponentBoard)
+      chosenSpace = this.brain.huntShipSpace(opponentBoard, playersMoves)
     } else {
       // Choose a random space if not currently hunting for a ship
       let spaceAvailable = false
@@ -162,16 +162,16 @@ class Player {
     this.brain.addHuntHit(cell)
   }
 
-  addHuntPlacement(cell) {
-    this.brain.addHuntPosition(cell)
-  }
+  // addHuntPlacement(cell) {
+  //   this.brain.addHuntPosition(cell)
+  // }
 
   getHuntHits() {
     return this.brain.getHuntHits()
   }
 
   endHunt() {
-    this.brain.endCurrentHunt()
+    this.brain.endHuntCheck()
   }
 }
 
