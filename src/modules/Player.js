@@ -167,7 +167,7 @@ class Player {
   }
 
   endHunt(sunkShip) {
-    this.brain.endHuntCheck()
+    this.brain.endHuntCheck(sunkShip)
   }
 }
 
