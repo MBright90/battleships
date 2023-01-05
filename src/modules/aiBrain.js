@@ -54,11 +54,35 @@ class Brain {
     this.currentHuntPositions = []
   }
 
+  #recursiveAxisCheck(arrayIndex) {
+    const result = this.currentHuntHits.find((hit) => {
+      // Skip this iteration if hit is the base case
+      if (this.currentHuntHits[arrayIndex] === hit) return false
+      // Check whether the base case and the current case match in y axis value and are beside in x
+      if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
+        && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
+        || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
+      // Check whether the base case and the current case match in x axis value and are beside in y
+      if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
+          && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
+          || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
+      return undefined
+    })
+    // If two hunt hits have been found beside each other, set the axis to match
+    if (this.currentHuntHits[arrayIndex].dataset.yPos === this.currentHuntHits[result].dataset.yPos) return 'x'
+    if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) return 'y'
+
+    // Recursive case - No matches have been found and so an axis is not yet set.
+    if (this.currentHuntHits.length >= arrayIndex + 2) this.#recursiveAxisCheck(arrayIndex + 1)
+    return null
+  }
+
   #checkHuntAxis() {
     if (!this.currentHuntAxis) {
       if (this.currentHuntHits.length >= 2) {
-        if (this.currentHuntHits[0].dataset.yPos === this.currentHuntHits[1].dataset.yPos) this.currentHuntAxis = 'x'
-        else if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) this.currentHuntAxis = 'y'
+        // Compare all huntHits to find one which includes at least two beside each other that have
+        // at least one further space in line
+        this.currentHuntAxis = this.#recursiveAxisCheck(this.currentHuntHits[0])
       }
     }
     return this.currentHuntAxis
