@@ -45,13 +45,21 @@ class Brain {
     return this.currentHuntHits
   }
 
-  endHuntCheck() {
+  removeHuntHit(hit) {
+    const hitIndex = this.currentHuntHits.indexOf(hit)
+    this.currentHuntHits.splice(hitIndex, 1)
+  }
+
+  endHuntCheck(sunkShip) {
     // Remove all huntHits associated with a sunk ship
+    sunkShip.position.forEach((position) => {
+      if (this.currentHuntHits.includes(position)) {
+        this.removeHuntHit(position)
+      }
+    })
 
     // If huntHits are now empty, end the hunt
-    this.currentlyHunting = false
-    this.currentHuntHits = []
-    this.currentHuntPositions = []
+    if (this.currentHuntHits.length <= 0) this.currentlyHunting = false
   }
 
   #recursiveAxisCheck(arrayIndex) {
