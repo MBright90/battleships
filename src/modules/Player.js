@@ -166,7 +166,7 @@ class Player {
     return this.brain.getHuntHits()
   }
 
-  endHunt() {
+  endHunt(sunkShip) {
     this.brain.endHuntCheck()
   }
 }

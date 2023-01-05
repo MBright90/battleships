@@ -46,7 +46,6 @@ function aiTakeTurn(currentTargetBoard, player) {
       const turnOutcome = umpire.checkHit(cell, shipPositions)
 
       if (turnOutcome) player.setHuntStatus(cell)
-      // if (player.checkHunting()) player.addHuntPlacement(cell)
       placeTarget(cell)
     }
   }
@@ -75,7 +74,7 @@ function checkHitOutcome(cell) {
   // Check if ship is complete, if true, shipStatus becomes the head cell of the ship
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
   if (shipStatus) dom.revealShip(shipStatus)
-  if (shipStatus && player.getPlayerType() === 'ai') player.endHunt()
+  if (shipStatus && player.getPlayerType() === 'ai') player.endHunt(ship)
 }
 
 function startNextPlacement() {
