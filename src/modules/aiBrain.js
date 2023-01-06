@@ -64,6 +64,8 @@ class Brain {
 
   #recursiveAxisCheck(arrayIndex) {
     const result = this.currentHuntHits.find((hit) => {
+      console.log(hit.dataset)
+      console.log(this.currentHuntHits[arrayIndex])
       // Skip this iteration if hit is the base case
       if (this.currentHuntHits[arrayIndex] === hit) return false
       // Check whether the base case and the current case match in y axis value and are beside in x
@@ -76,9 +78,12 @@ class Brain {
           || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
       return undefined
     })
+    const resultIndex = this.currentHuntHits.indexOf(result)
     // If two hunt hits have been found beside each other, set the axis to match
-    if (this.currentHuntHits[arrayIndex].dataset.yPos === this.currentHuntHits[result].dataset.yPos) return 'x'
-    if (this.currentHuntHits[0].dataset.xPos === this.currentHuntHits[1].dataset.xPos) return 'y'
+    if (resultIndex) {
+      if (this.currentHuntHits[arrayIndex].dataset.yPos === this.currentHuntHits[resultIndex].dataset.yPos) return 'x'
+      if (this.currentHuntHits[arrayIndex].dataset.xPos === this.currentHuntHits[resultIndex].dataset.xPos) return 'y'
+    }
 
     // Recursive case - No matches have been found and so an axis is not yet set.
     if (this.currentHuntHits.length >= arrayIndex + 2) this.#recursiveAxisCheck(arrayIndex + 1)
@@ -90,7 +95,7 @@ class Brain {
       if (this.currentHuntHits.length >= 2) {
         // Compare all huntHits to find one which includes at least two beside each other that have
         // at least one further space in line
-        this.currentHuntAxis = this.#recursiveAxisCheck(this.currentHuntHits[0])
+        this.currentHuntAxis = this.#recursiveAxisCheck(0)
       }
     }
     return this.currentHuntAxis
