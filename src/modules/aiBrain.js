@@ -62,22 +62,24 @@ class Brain {
     if (this.currentHuntHits.length <= 0) this.currentlyHunting = false
   }
 
+  #checkAxisMatch(arrayIndex, hit) {
+    console.log(this.currentHuntHits[arrayIndex])
+    console.log(hit)
+    // Return if the element at arrayIndex and hit are the same
+    if (this.currentHuntHits[arrayIndex] === hit) return false
+    // Check whether the base case and the current case match in y axis value and are beside in x
+    if (this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos
+      && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
+      || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
+    // Check whether the base case and the current case match in x axis value and are beside in y
+    if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
+        && (this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos + 1
+        || this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos - 1)) return true
+    return false
+  }
+
   #recursiveAxisCheck(arrayIndex) {
-    const result = this.currentHuntHits.find((hit) => {
-      console.log(hit.dataset)
-      console.log(this.currentHuntHits[arrayIndex])
-      // Skip this iteration if hit is the base case
-      if (this.currentHuntHits[arrayIndex] === hit) return false
-      // Check whether the base case and the current case match in y axis value and are beside in x
-      if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
-        && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
-        || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
-      // Check whether the base case and the current case match in x axis value and are beside in y
-      if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
-          && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
-          || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
-      return undefined
-    })
+    const result = this.currentHuntHits.find((hit) => this.#checkAxisMatch(arrayIndex, hit))
     const resultIndex = this.currentHuntHits.indexOf(result)
     // If two hunt hits have been found beside each other, set the axis to match
     if (resultIndex) {
