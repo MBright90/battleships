@@ -63,18 +63,19 @@ class Brain {
   }
 
   #checkAxisMatch(arrayIndex, hit) {
-    console.log(this.currentHuntHits[arrayIndex])
-    console.log(hit)
     // Return if the element at arrayIndex and hit are the same
     if (this.currentHuntHits[arrayIndex] === hit) return false
-    // Check whether the base case and the current case match in y axis value and are beside in x
-    if (this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos
-      && (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos + 1
-      || this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos - 1)) return true
-    // Check whether the base case and the current case match in x axis value and are beside in y
-    if (this.currentHuntHits[arrayIndex].dataset.yPos === hit.dataset.yPos
-        && (this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos + 1
-        || this.currentHuntHits[arrayIndex].dataset.xPos === hit.dataset.xPos - 1)) return true
+
+    // Convert dataset positions to integer to allow easy comparison
+    const currentX = parseInt(this.currentHuntHits[arrayIndex].dataset.xPos, 10)
+    const currentY = parseInt(this.currentHuntHits[arrayIndex].dataset.yPos, 10)
+    const hitX = parseInt(hit.dataset.xPos, 10)
+    const hitY = parseInt(hit.dataset.yPos, 10)
+
+    // Check whether the base case and the current case match in x or y axis value and are beside
+    // each other. If they do return true
+    if ((currentX === hitX && (currentY === hitY + 1 || currentY === hitY - 1))
+    || (currentY === hitY && (currentX === hitX + 1 || currentX === hitX - 1))) return true
     return false
   }
 
