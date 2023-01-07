@@ -74,7 +74,10 @@ function checkHitOutcome(cell) {
   // Check if ship is complete, if true, shipStatus becomes the head cell of the ship
   const shipStatus = opponent.checkShipStatus(ship, player.getMoves())
   if (shipStatus) dom.revealShip(shipStatus)
-  if (shipStatus && player.getPlayerType() === 'ai') player.endHunt(ship)
+  if (shipStatus && player.getPlayerType() === 'ai') {
+    const shipPositions = opponent.getShipsPosition(ship)
+    player.endHunt(shipPositions)
+  }
 }
 
 function startNextPlacement() {
