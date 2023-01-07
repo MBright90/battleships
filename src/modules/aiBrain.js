@@ -51,8 +51,6 @@ class Brain {
   }
 
   endHuntCheck(sunkShip) {
-    console.log(sunkShip)
-    console.log(this.currentHuntHits)
     // Remove all huntHits associated with a sunk ship
     sunkShip.position.forEach((position) => {
       if (this.currentHuntHits.includes(position)) {
