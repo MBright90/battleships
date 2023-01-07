@@ -7,7 +7,9 @@ class Brain {
     this.currentHuntAxis = null
   }
 
-  // Brain utilities
+  // ############### //
+  // Brain utilities //
+  // ############### //
 
   #generateRandom(maxNum) {
     if (maxNum === 0) return 0
@@ -27,7 +29,9 @@ class Brain {
     return returnArr
   }
 
-  // Ship hunting functions used when part of a ship is located //
+  // ################################ //
+  // Ship hunting getters and setters //
+  // ################################ //
 
   getHuntingStatus() {
     return this.currentlyHunting
@@ -62,6 +66,10 @@ class Brain {
     // If huntHits are now empty, end the hunt
     if (this.currentHuntHits.length <= 0) this.currentlyHunting = false
   }
+
+  // ################## //
+  // Ship hunting logic //
+  // ################## //
 
   #checkAxisMatch(arrayIndex, hit) {
     // Return if the element at arrayIndex and hit are the same
@@ -151,6 +159,8 @@ class Brain {
 
   huntShipSpace(board, unavailableSpaces) {
     const emptyTargetSpaces = []
+    // Until an available space next to an un-sunk ship is found, search for an available
+    // space.
     while (emptyTargetSpaces.length <= 0) {
       this.currentHuntHits.forEach((hit) => {
         const availableSpaces = this.#searchCell(hit, board, unavailableSpaces)
@@ -160,17 +170,18 @@ class Brain {
           filteredSpaces.forEach((space) => {
             emptyTargetSpaces.push(space)
           })
-          // if there are not spaces available swap axis and try again
-        } else {
-          this.#swapAxis()
         }
       })
+      // if there are not spaces available swap axis and try again
+      if (emptyTargetSpaces.length < 1) this.#swapAxis()
     }
     // Return a random choice from within the available choices
     return emptyTargetSpaces[this.#generateRandom(emptyTargetSpaces.length - 1)]
   }
 
+  // ################################### //
   // General position choosing functions //
+  // ################################### //
 
   chooseSpace(board) {
     const randomX = this.#generateRandom(10)
