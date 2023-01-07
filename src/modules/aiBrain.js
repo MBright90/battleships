@@ -51,8 +51,9 @@ class Brain {
   }
 
   endHuntCheck(sunkShip) {
+    this.currentHuntAxis = null
     // Remove all huntHits associated with a sunk ship
-    sunkShip.position.forEach((position) => {
+    sunkShip.forEach((position) => {
       if (this.currentHuntHits.includes(position)) {
         this.removeHuntHit(position)
       }
@@ -104,11 +105,11 @@ class Brain {
     return this.currentHuntAxis
   }
 
-  #swapAxis(currentAxis) {
+  #swapAxis() {
     // Is called when a ship comes across two or more ships besides each other and
     // cannot find a full ship
-    if (currentAxis === 'x') this.huntAxis = 'y'
-    else this.huntAxis = 'x'
+    if (this.currentHuntAxis === 'x') this.currentHuntAxis = 'y'
+    else this.currentHuntAxis = 'x'
   }
 
   #filterTakenSpaces(arr) {
@@ -150,16 +151,21 @@ class Brain {
 
   huntShipSpace(board, unavailableSpaces) {
     const emptyTargetSpaces = []
-    this.currentHuntHits.forEach((hit) => {
-      const availableSpaces = this.#searchCell(hit, board, unavailableSpaces)
-      const filteredSpaces = this.#filterTakenSpaces(availableSpaces)
-      // If there are any spaces available, add to the targets list
-      if (filteredSpaces.length > 0) {
-        filteredSpaces.forEach((space) => {
-          emptyTargetSpaces.push(space)
-        })
-      } else this.#swapAxis()
-    })
+    while (emptyTargetSpaces.length <= 0) {
+      this.currentHuntHits.forEach((hit) => {
+        const availableSpaces = this.#searchCell(hit, board, unavailableSpaces)
+        const filteredSpaces = this.#filterTakenSpaces(availableSpaces)
+        // If there are any spaces available, add to the targets list
+        if (filteredSpaces.length > 0) {
+          filteredSpaces.forEach((space) => {
+            emptyTargetSpaces.push(space)
+          })
+          // if there are not spaces available swap axis and try again
+        } else {
+          this.#swapAxis()
+        }
+      })
+    }
     // Return a random choice from within the available choices
     return emptyTargetSpaces[this.#generateRandom(emptyTargetSpaces.length - 1)]
   }
