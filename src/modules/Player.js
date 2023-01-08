@@ -1,7 +1,8 @@
 const Brain = require('./aiBrain')
 
 class Player {
-  constructor(boardName) {
+  constructor(boardName, playerName) {
+    this.playerName = playerName
     this.playerScore = 0
     this.playerType = 'human'
     this.moves = []
