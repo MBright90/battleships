@@ -57,8 +57,8 @@ const dom = (() => {
       return boardDiv
     }
 
-    function createDescriptionSpace() {
-      const descriptionContainer = createClassElement('div', 'description-container')
+    function createButtonSpace() {
+      const descriptionContainer = createClassElement('div', 'button-container')
       const axisButton = createClassElement('button', 'axis-button')
       axisButton.textContent = 'Axis'
       return appendChildren(descriptionContainer, axisButton)
@@ -71,7 +71,7 @@ const dom = (() => {
       boardWrapper,
       newBoard('player-one-board', 10),
       newBoard('player-two-board', 10),
-      createDescriptionSpace(),
+      createButtonSpace(),
     )
     main.appendChild(boardWrapper)
   }
@@ -162,6 +162,30 @@ const dom = (() => {
     elements.forEach((element) => element.remove())
   }
 
+  function createResetButton() {
+    const resetButton = createClassElement('button', 'reset-button')
+    resetButton.textContent = 'Reset'
+    return resetButton
+  }
+
+  function removeButtons(buttonContainer) {
+    buttonContainer.childNodes.forEach((node) => node.remove())
+  }
+
+  function initResetButton() {
+    const buttonContainer = document.querySelector('.button-container')
+    removeButtons(buttonContainer)
+    const resetButton = createResetButton()
+    buttonContainer.append(resetButton)
+    return resetButton
+  }
+
+  function resetGameBoards() {
+    const main = document.querySelector('main')
+    main.childNodes.forEach((node) => node.remove())
+    main.appendChild(createOppositionChoices())
+  }
+
   // ********************* //
   // Initial page creation //
   // ********************* //
@@ -203,6 +227,11 @@ const dom = (() => {
     hideShips,
     revealShip,
     placeTakenTurn,
+
+    createResetButton,
+    removeButtons,
+    initResetButton,
+    resetGameBoards,
 
     removeElements,
   }
