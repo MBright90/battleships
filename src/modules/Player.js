@@ -49,6 +49,15 @@ class Player {
     if (this.playerType === 'ai') this.#initiateBrain()
   }
 
+  resetPlayer() {
+    this.moves = []
+    this.currentShip = 'carrier'
+    Object.keys(this.ships).forEach((ship) => {
+      this.ships[ship].position = []
+    })
+    this.brain = null
+  }
+
   // **************** //
   // Standard getters //
   // **************** //
