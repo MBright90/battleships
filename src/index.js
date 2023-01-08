@@ -55,9 +55,24 @@ function aiTakeTurn(currentTargetBoard, player) {
 // Callbacks //
 // ********* //
 
+function resetGame() {
+  // Reset boards to player choice
+  dom.resetGameBoards()
+  gameSetupListeners()
+
+  // Reset players/umpire
+  playerOne.resetPlayer()
+  playerTwo.resetPlayer()
+}
+
 function beginGame(player) {
   dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
+  // Convert axis button into reset button
+  const resetButton = dom.initResetButton()
+  resetButton.addEventListener('click', () => {
+    resetGame()
+  })
   beginNextTurn()
 }
 
