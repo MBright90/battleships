@@ -2,7 +2,6 @@ const utilities = require('./utilities').default
 
 class Umpire {
   constructor(firstPlayer, secondPlayer) {
-    this.score = 0
     this.currentPlayer = firstPlayer
     this.currentOpponent = secondPlayer
     this.players = [firstPlayer, secondPlayer]

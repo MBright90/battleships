@@ -2,6 +2,7 @@ const Brain = require('./aiBrain')
 
 class Player {
   constructor(boardName) {
+    this.playerScore = 0
     this.playerType = 'human'
     this.moves = []
     this.boardName = boardName
@@ -66,6 +67,10 @@ class Player {
     return this.playerType
   }
 
+  getPlayerScore() {
+    return this.playerScore
+  }
+
   getBoardName() {
     return this.boardName
   }
@@ -111,6 +116,11 @@ class Player {
   // ********************** //
   // Turn outcome functions //
   // ********************** //
+
+  incrementScore() {
+    this.playerScore += 1
+    return this.playerScore
+  }
 
   addMove(move) {
     this.moves[this.moves.length] = move
