@@ -3,11 +3,13 @@ import './style/style.css'
 import dom from './modules/domIndex'
 import Umpire from './modules/Umpire'
 import Player from './modules/Player'
+import Announcer from './modules/announcer'
 
 document.body.appendChild(dom.initPage())
-const playerOne = new Player('player-one-board')
-const playerTwo = new Player('player-two-board')
+const playerOne = new Player('player-one-board', 'Player One')
+const playerTwo = new Player('player-two-board', 'Player Two')
 const umpire = new Umpire(playerOne, playerTwo)
+const announcer = new Announcer()
 let axis = 'x'
 
 // ************ //
