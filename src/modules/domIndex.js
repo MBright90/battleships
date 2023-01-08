@@ -204,9 +204,9 @@ const dom = (() => {
 
     // Create footer
     const footer = document.createElement('footer')
-    footer.appendChild(
-      createTextElement('p', 'MBright90'),
-    )
+    const gitHubTag = createTextElement('a', 'MBright90')
+    gitHubTag.setAttribute('href', 'https://github.com/MBright90/battleships')
+    footer.appendChild(gitHubTag)
 
     // Append all to layout wrapper
     appendChildren(
