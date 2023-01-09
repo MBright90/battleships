@@ -189,7 +189,9 @@ const dom = (() => {
 
   function resetGameBoards() {
     const main = document.querySelector('main')
-    main.childNodes.forEach((node) => node.remove())
+    while (main.childNodes.length >= 1) {
+      main.childNodes[0].remove()
+    }
     main.appendChild(createOppositionChoices())
   }
 
