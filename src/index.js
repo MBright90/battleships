@@ -9,7 +9,7 @@ document.body.appendChild(dom.initPage())
 const playerOne = new Player('player-one-board', 'Player One')
 const playerTwo = new Player('player-two-board', 'Player Two')
 const umpire = new Umpire(playerOne, playerTwo)
-const announcer = new Announcer()
+let announcer
 let axis = 'x'
 
 // ************ //
@@ -200,8 +200,13 @@ function gameSetupListeners() {
   const setupButtonCallback = (event) => {
     buttons.forEach((button) => button.remove())
     playerTwo.setPlayerType(event.target.dataset.choice.toLowerCase())
+
+    // Convert dom to game play ui
+    const announcementContainer = dom.createAnnouncementContainer()
+    announcer = new Announcer(announcementContainer)
     dom.createBoards()
     changeAxisListener()
+    announcer.announcePlacingShips(umpire.getCurrentPlayer().getPlayerName())
     addHoverListeners(umpire.getCurrentPlayer())
   }
 
