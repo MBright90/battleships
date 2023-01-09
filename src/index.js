@@ -22,7 +22,7 @@ function aiPlaceShip(player) {
 
   let spaceAvailable = false
   while (!spaceAvailable) {
-    const placementArr = player.simulateShipPlacement(player.getBoardName()) // [cell, axis]
+    const placementArr = player.simulateShipPlacement(player.getBoardName())
     const cell = placementArr[0]
     const simulatedAxis = placementArr[1]
 
@@ -148,15 +148,21 @@ function targetPlacementCallback(e) {
 
 function placeTarget(cell) {
   // Check where the ships are and whether the chosen cell has hit a ship
-  const shipPositions = umpire.getCurrentOpponent().allShipPositions()
+  const player = umpire.getCurrentPlayer()
+  const opponent = umpire.getCurrentOpponent()
+  const shipPositions = opponent.allShipPositions()
   const turnOutcome = umpire.checkHit(cell, shipPositions)
   // Change the color of the chosen cell based on the turn outcome and add the move to the players
   // move list
   dom.placeTakenTurn(cell, turnOutcome)
-  umpire.getCurrentPlayer().addMove(cell)
+  player.addMove(cell)
   if (turnOutcome) checkHitOutcome(cell)
-  if (umpire.checkVictoryConditions()) console.log('game is won')
-  else {
+  if (umpire.checkVictoryConditions()) {
+    announcer.announceWin(
+      player.getPlayerName(),
+      opponent.getPlayerName(),
+    )
+  } else {
     umpire.switchPlayers()
     beginNextTurn()
   }
@@ -231,6 +237,7 @@ function removeTargetListeners() {
 function beginNextTurn() {
   const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
   const player = umpire.getCurrentPlayer()
+  announcer.announceThinking(player.getPlayerName())
   if (umpire.getCurrentPlayer().getPlayerType() === 'human') takeTurn(currentTargetBoard)
   else aiTakeTurn(currentTargetBoard, player)
 }
