@@ -18,22 +18,22 @@ export default class Announcer {
 
   announcePlacingShips(playerName) {
     this.#removePrevAnnouncement()
-    this.container.append(this.#createEl(playerName, ' is placing ships...'))
+    return this.#createEl(playerName, ' is placing ships...')
   }
 
   announceThinking(playerName) {
     this.#removePrevAnnouncement()
-    this.container.append(this.#createEl(playerName, ' is thinking...'))
+    return this.#createEl(playerName, ' is thinking...')
   }
 
   announceTurnOutcome(playerName, turnOutcome) {
     this.#removePrevAnnouncement()
     const outcome = turnOutcome ? 'hit!' : 'miss!'
-    this.container.append(this.#createEl(playerName, `'s torpedo results in a ${outcome}`))
+    return this.#createEl(playerName, `'s torpedo results in a ${outcome}`)
   }
 
   announceWin(playerName, opponent) {
     this.#removePrevAnnouncement()
-    this.container.append(this.#createEl(playerName, ` has sunk all if ${opponent}'s battleships`))
+    return this.#createEl(playerName, ` has sunk all if ${opponent}'s battleships`)
   }
 }
