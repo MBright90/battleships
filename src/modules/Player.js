@@ -51,6 +51,11 @@ class Player {
     if (this.playerType === 'ai') this.#initiateBrain()
   }
 
+  setPlayerName(newName) {
+    this.playerName = newName
+    return this.playerName
+  }
+
   resetPlayer() {
     this.moves = []
     this.currentShip = 'carrier'
@@ -66,6 +71,10 @@ class Player {
 
   getPlayerType() {
     return this.playerType
+  }
+
+  getPlayerName() {
+    return this.playerName
   }
 
   getPlayerScore() {
