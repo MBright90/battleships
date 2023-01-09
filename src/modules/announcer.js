@@ -6,16 +6,34 @@ export default class Announcer {
     this.container = container
   }
 
+  #removePrevAnnouncement() {
+    if (this.container.childNode) this.container.childNode.remove()
+  }
+
+  #createEl(playerName, announcement) {
+    const newAnnouncementEl = document.createElement('p')
+    newAnnouncementEl.classList.add('announcement')
+    newAnnouncementEl.textContent = `${playerName}${announcement}`
+  }
+
   announcePlacingShips(playerName) {
-    this.container.childNode.remove()
-
+    this.#removePrevAnnouncement()
+    this.container.append(this.#createEl(playerName, ' is placing ships...'))
   }
 
-  announceAiThinking(playerName) {
-
+  announceThinking(playerName) {
+    this.#removePrevAnnouncement()
+    this.container.append(this.#createEl(playerName, ' is thinking...'))
   }
 
-  announceTurnOutcome(PlayerName) {
+  announceTurnOutcome(playerName, turnOutcome) {
+    this.#removePrevAnnouncement()
+    const outcome = turnOutcome ? 'hit!' : 'miss!'
+    this.container.append(this.#createEl(playerName, `'s torpedo results in a ${outcome}`))
+  }
 
+  announceWin(playerName, opponent) {
+    this.#removePrevAnnouncement()
+    this.container.append(this.#createEl(playerName, ` has sunk all if ${opponent}'s battleships`))
   }
 }
