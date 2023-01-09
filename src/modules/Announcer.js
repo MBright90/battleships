@@ -35,6 +35,6 @@ export default class Announcer {
 
   announceWin(playerName, opponent) {
     this.#removePrevAnnouncement()
-    this.container.appendChild(this.#createEl(playerName, ` has sunk all if ${opponent}'s battleships`))
+    this.container.appendChild(this.#createEl(playerName, ` has sunk all of ${opponent}'s battleships`))
   }
 }
