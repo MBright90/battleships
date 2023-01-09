@@ -154,6 +154,7 @@ function placeTarget(cell) {
   const turnOutcome = umpire.checkHit(cell, shipPositions)
   // Change the color of the chosen cell based on the turn outcome and add the move to the players
   // move list
+  announcer.announceTurnOutcome(player, turnOutcome)
   dom.placeTakenTurn(cell, turnOutcome)
   player.addMove(cell)
   if (turnOutcome) checkHitOutcome(cell)
@@ -164,6 +165,7 @@ function placeTarget(cell) {
     )
   } else {
     umpire.switchPlayers()
+    // Include a timeout here
     beginNextTurn()
   }
 }
