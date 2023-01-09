@@ -33,6 +33,13 @@ const dom = (() => {
   // Board creation/manipulation //
   // *************************** //
 
+  function createAnnouncementContainer() {
+    const announcementContainer = createClassElement('div', 'announcement-container')
+    const main = document.querySelector('main')
+    main.appendChild(announcementContainer)
+    return announcementContainer
+  }
+
   function createBoards() {
     function newBoard(boardClassName, size) {
       const boardRow = (rowNumber) => {
@@ -221,6 +228,7 @@ const dom = (() => {
   return {
     initPage,
 
+    createAnnouncementContainer,
     createBoards,
     boardHover,
     placeShip,
