@@ -3,7 +3,7 @@ import './style/style.css'
 import dom from './modules/domIndex'
 import Umpire from './modules/Umpire'
 import Player from './modules/Player'
-import Announcer from './modules/announcer'
+import Announcer from './modules/Announcer'
 
 document.body.appendChild(dom.initPage())
 const playerOne = new Player('player-one-board', 'Player One')
@@ -81,6 +81,7 @@ function beginGame(player) {
 function placePlayerTwoShips(player) {
   if (player.getPlayerType() === 'human') dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
+  announcer.announcePlacingShips(umpire.getCurrentPlayer().getPlayerName())
   startNextPlacement()
 }
 
