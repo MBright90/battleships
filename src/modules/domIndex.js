@@ -72,7 +72,6 @@ const dom = (() => {
     }
 
     const main = document.querySelector('main')
-    main.childNodes.forEach((node) => node.remove())
     const boardWrapper = createClassElement('div', 'board-wrapper')
     appendChildren(
       boardWrapper,
@@ -143,7 +142,10 @@ const dom = (() => {
   // Dom manipulation //
   // **************** //
 
-  function createNamingFields() {
+  function createNamingFields(playerOneName, playerTwoName) {
+    playerOneName = playerOneName || 'Player One'
+    playerTwoName = playerTwoName || 'Player Two'
+
     const createNameInput = (placeholderName, fieldName) => {
       const input = document.createElement('input')
       setAttributes(
@@ -153,7 +155,7 @@ const dom = (() => {
           { name: fieldName },
           { id: fieldName },
           { maxLength: 20 },
-          { placeholder: placeholderName },
+          { value: placeholderName },
         ],
       )
       return input
@@ -165,8 +167,8 @@ const dom = (() => {
     appendChildren(
       fieldset,
       legend,
-      createNameInput('Player One', 'player-one-field'),
-      createNameInput('Player Two', 'player-two-field'),
+      createNameInput(playerOneName, 'player-one-field'),
+      createNameInput(playerTwoName, 'player-two-field'),
     )
     return appendChildren(form, fieldset)
   }
@@ -193,8 +195,12 @@ const dom = (() => {
     )
   }
 
-  function removeElements(...elements) {
-    elements.forEach((element) => element.remove())
+  function clearMain() {
+    const main = document.querySelector('main')
+    while (main.childNodes.length >= 1) {
+      main.childNodes[0].remove()
+    }
+    return main
   }
 
   function createResetButton() {
@@ -203,24 +209,24 @@ const dom = (() => {
     return resetButton
   }
 
-  function removeButtons(buttonContainer) {
+  function removeCurrentButtons(buttonContainer) {
     buttonContainer.childNodes.forEach((node) => node.remove())
   }
 
   function initResetButton() {
     const buttonContainer = document.querySelector('.button-container')
-    removeButtons(buttonContainer)
+    removeCurrentButtons(buttonContainer)
     const resetButton = createResetButton()
     buttonContainer.append(resetButton)
     return resetButton
   }
 
-  function resetGameBoards() {
-    const main = document.querySelector('main')
-    while (main.childNodes.length >= 1) {
-      main.childNodes[0].remove()
-    }
-    main.appendChild(createOppositionChoices())
+  function resetGameBoards(playerOneName, playerTwoName) {
+    appendChildren(
+      clearMain(),
+      createNamingFields(playerOneName, playerTwoName),
+      createOppositionChoices(),
+    )
   }
 
   // ********************* //
@@ -268,11 +274,9 @@ const dom = (() => {
     placeTakenTurn,
 
     createResetButton,
-    removeButtons,
     initResetButton,
     resetGameBoards,
-
-    removeElements,
+    clearMain,
   }
 })()
 
