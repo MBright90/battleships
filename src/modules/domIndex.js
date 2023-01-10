@@ -148,20 +148,27 @@ const dom = (() => {
       const input = document.createElement('input')
       setAttributes(
         input,
-        { type: 'text' },
-        { name: fieldName },
-        { id: fieldName },
-        { placeholder: placeholderName },
+        [
+          { type: 'text' },
+          { name: fieldName },
+          { id: fieldName },
+          { maxLength: 20 },
+          { placeholder: placeholderName },
+        ],
       )
       return input
     }
 
     const form = document.createElement('form')
-    return appendChildren(
-      form,
+    const fieldset = document.createElement('fieldset')
+    const legend = createTextElement('legend', 'Player Names')
+    appendChildren(
+      fieldset,
+      legend,
       createNameInput('Player One', 'player-one-field'),
       createNameInput('Player Two', 'player-two-field'),
     )
+    return appendChildren(form, fieldset)
   }
 
   function createOppositionChoices() {
