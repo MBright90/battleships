@@ -72,6 +72,7 @@ function resetGame() {
 
 function beginGame(player) {
   dom.hideShips(player.getBoardName())
+  // set one second wait if ai is playing
   umpire.switchPlayers()
   // Convert axis button into reset button
   const resetButton = dom.initResetButton()
