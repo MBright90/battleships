@@ -59,7 +59,10 @@ function aiTakeTurn(currentTargetBoard, player) {
 
 function resetGame() {
   // Reset boards to player choice
-  dom.resetGameBoards()
+  dom.resetGameBoards(
+    playerOne.getPlayerName(),
+    playerTwo.getPlayerName(),
+  )
   gameSetupListeners()
 
   // Reset players/umpire
@@ -210,7 +213,14 @@ function gameSetupListeners() {
     buttons.forEach((button) => button.remove())
     playerTwo.setPlayerType(event.target.dataset.choice.toLowerCase())
 
+    // Set player names to field values
+    const playerOneField = document.querySelector('#player-one-field')
+    playerOne.setPlayerName(playerOneField.value)
+    const playerTwoField = document.querySelector('#player-two-field')
+    playerTwo.setPlayerName(playerTwoField.value)
+
     // Convert dom to game play ui
+    dom.clearMain()
     const announcementContainer = dom.createAnnouncementContainer()
     announcer = new Announcer(announcementContainer)
     dom.createBoards()
