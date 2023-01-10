@@ -32,6 +32,7 @@ header {
     width: 100%;
 }
 
+form fieldset,
 .choices-container {
     align-items: center;
     color: rgb(235, 235, 235);
@@ -39,9 +40,28 @@ header {
     flex-direction: column;
 }
 
+form fieldset {
+    border: 2px solid rgb(235, 235, 235);
+    gap: 10px;
+    padding: 15px 10px;
+}
+
+form fieldset legend,
 .choices-container > p {
     font-size: 20px;
     font-weight: bold;
+}
+
+input[type=text] {
+    color: rgb(60, 60, 60);
+    font-size: large;
+    letter-spacing: 2px;
+    padding: 3px 5px;
+    width: 100%;
+}
+
+.choices-container {
+    margin-top: 10px;
 }
 
 .choices-buttons-container {
