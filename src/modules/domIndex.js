@@ -143,6 +143,27 @@ const dom = (() => {
   // Dom manipulation //
   // **************** //
 
+  function createNamingFields() {
+    const createNameInput = (placeholderName, fieldName) => {
+      const input = document.createElement('input')
+      setAttributes(
+        input,
+        { type: 'text' },
+        { name: fieldName },
+        { id: fieldName },
+        { placeholder: placeholderName },
+      )
+      return input
+    }
+
+    const form = document.createElement('form')
+    return appendChildren(
+      form,
+      createNameInput('Player One', 'player-one-field'),
+      createNameInput('Player Two', 'player-two-field'),
+    )
+  }
+
   function createOppositionChoices() {
     const createChoiceButton = (choice) => {
       const button = createTextElement('button', choice)
@@ -209,6 +230,7 @@ const dom = (() => {
 
     // Create main
     const main = document.createElement('main')
+    main.appendChild(createNamingFields())
     main.appendChild(createOppositionChoices())
 
     // Create footer
