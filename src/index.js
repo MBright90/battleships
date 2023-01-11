@@ -9,12 +9,23 @@ document.body.appendChild(dom.initPage())
 const playerOne = new Player('player-one-board', 'Player One')
 const playerTwo = new Player('player-two-board', 'Player Two')
 const umpire = new Umpire(playerOne, playerTwo)
-let announcer
+
 let axis = 'x'
+let announcer
+let currentTimeout
 
 // ************ //
 // ai functions //
 // ************ //
+
+function aiTimeout(func, time, arg) {
+  arg = arg || null
+
+  const playerType = umpire.getCurrentPlayer().getPlayerType()
+  if (playerType === 'ai' && arg) return setTimeout(() => { func(arg) }, time)
+  if (playerType === 'ai') return setTimeout(func, time)
+  return func
+}
 
 function aiPlaceShip(player) {
   const currentShip = player.getCurrentShip()
@@ -48,7 +59,8 @@ function aiTakeTurn(currentTargetBoard, player) {
       const turnOutcome = umpire.checkHit(cell, shipPositions)
 
       if (turnOutcome) player.setHuntStatus(cell)
-      placeTarget(cell)
+      currentTimeout = aiTimeout(placeTarget, 1000, cell)
+      currentTimeout()
     }
   }
 }
@@ -58,6 +70,9 @@ function aiTakeTurn(currentTargetBoard, player) {
 // ********* //
 
 function resetGame() {
+  // If active timeout in place for ai, clear timeout
+  clearTimeout(currentTimeout)
+
   // Reset boards to player choice
   dom.resetGameBoards(
     playerOne.getPlayerName(),
@@ -73,7 +88,8 @@ function resetGame() {
 function beginGame(player) {
   dom.hideShips(player.getBoardName())
   // set one second wait if ai is playing
-  umpire.switchPlayers()
+  currentTimeout = aiTimeout(umpire.switchPlayers, 1000)
+  currentTimeout()
   // Convert axis button into reset button
   const resetButton = dom.initResetButton()
   resetButton.addEventListener('click', () => {
@@ -168,8 +184,8 @@ function placeTarget(cell) {
       opponent.getPlayerName(),
     )
   } else {
-    umpire.switchPlayers()
-    // Include a timeout here
+    currentTimeout = aiTimeout(umpire.switchPlayers, 1000)
+    currentTimeout()
     beginNextTurn()
   }
 }
@@ -251,7 +267,7 @@ function beginNextTurn() {
   const currentTargetBoard = umpire.getCurrentOpponent().getBoardName()
   const player = umpire.getCurrentPlayer()
   announcer.announceThinking(player.getPlayerName())
-  if (umpire.getCurrentPlayer().getPlayerType() === 'human') takeTurn(currentTargetBoard)
+  if (player.getPlayerType() === 'human') takeTurn(currentTargetBoard)
   else aiTakeTurn(currentTargetBoard, player)
 }
 
