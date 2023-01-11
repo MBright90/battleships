@@ -18,13 +18,11 @@ let currentTimeout
 // ai functions //
 // ************ //
 
-function aiTimeout(func, time, arg) {
-  arg = arg || null
-
-  const playerType = umpire.getCurrentPlayer().getPlayerType()
-  if (playerType === 'ai' && arg) return setTimeout(() => { func(arg) }, time)
-  if (playerType === 'ai') return setTimeout(func, time)
-  return func
+function aiDelay(time) {
+  if (umpire.getCurrentPlayer().getPlayerType() === 'ai') {
+    return new Promise((resolve) => setTimeout(resolve, time))
+  }
+  return new Promise((resolve) => setTimeout(resolve, 0))
 }
 
 function aiPlaceShip(player) {
@@ -43,7 +41,7 @@ function aiPlaceShip(player) {
       spaceAvailable = true
     }
   }
-  startNextPlacement()
+  aiDelay(500).then(startNextPlacement())
 }
 
 function aiTakeTurn(currentTargetBoard, player) {
@@ -59,8 +57,7 @@ function aiTakeTurn(currentTargetBoard, player) {
       const turnOutcome = umpire.checkHit(cell, shipPositions)
 
       if (turnOutcome) player.setHuntStatus(cell)
-      currentTimeout = aiTimeout(placeTarget, 1000, cell)
-      currentTimeout()
+      aiDelay(1000).then(placeTarget(cell))
     }
   }
 }
@@ -88,20 +85,20 @@ function resetGame() {
 function beginGame(player) {
   dom.hideShips(player.getBoardName())
   // set one second wait if ai is playing
-  currentTimeout = aiTimeout(umpire.switchPlayers, 1000)
-  currentTimeout()
+  umpire.switchPlayers()
   // Convert axis button into reset button
   const resetButton = dom.initResetButton()
   resetButton.addEventListener('click', () => {
     resetGame()
   })
-  beginNextTurn()
+  aiDelay(1000).then(beginNextTurn())
 }
 
 function placePlayerTwoShips(player) {
   if (player.getPlayerType() === 'human') dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
   announcer.announcePlacingShips(umpire.getCurrentPlayer().getPlayerName())
+  aiDelay(1000)
   startNextPlacement()
 }
 
@@ -166,7 +163,7 @@ function targetPlacementCallback(e) {
   placeTarget(cell)
 }
 
-function placeTarget(cell) {
+async function placeTarget(cell) {
   // Check where the ships are and whether the chosen cell has hit a ship
   const player = umpire.getCurrentPlayer()
   const opponent = umpire.getCurrentOpponent()
@@ -184,9 +181,7 @@ function placeTarget(cell) {
       opponent.getPlayerName(),
     )
   } else {
-    currentTimeout = aiTimeout(umpire.switchPlayers, 1000)
-    currentTimeout()
-    beginNextTurn()
+    aiDelay(1000).then(umpire.switchPlayers()).then(beginNextTurn())
   }
 }
 
