@@ -18,14 +18,11 @@ let currentTimeout
 // ai functions //
 // ************ //
 
-function aiDelay(time) {
-  if (umpire.getCurrentPlayer().getPlayerType() === 'ai') {
-    return new Promise((resolve) => setTimeout(resolve, time))
-  }
-  return new Promise((resolve) => setTimeout(resolve, 0))
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time))
 }
 
-function aiPlaceShip(player) {
+async function aiPlaceShip(player) {
   const currentShip = player.getCurrentShip()
   const currentPositions = player.allShipPositions()
 
@@ -41,13 +38,15 @@ function aiPlaceShip(player) {
       spaceAvailable = true
     }
   }
-  aiDelay(500).then(startNextPlacement())
+  await delay(500)
+  startNextPlacement()
 }
 
-function aiTakeTurn(currentTargetBoard, player) {
+async function aiTakeTurn(currentTargetBoard, player) {
+  let cell
   let spaceAvailable = false
   while (!spaceAvailable) {
-    const cell = player.simulateAiTurn(currentTargetBoard)
+    cell = player.simulateAiTurn(currentTargetBoard)
     if (!cell.classList.contains('chosen')) {
       spaceAvailable = true
 
@@ -57,9 +56,10 @@ function aiTakeTurn(currentTargetBoard, player) {
       const turnOutcome = umpire.checkHit(cell, shipPositions)
 
       if (turnOutcome) player.setHuntStatus(cell)
-      aiDelay(1000).then(placeTarget(cell))
     }
   }
+  await delay(1000)
+  placeTarget(cell)
 }
 
 // ********* //
@@ -91,14 +91,14 @@ function beginGame(player) {
   resetButton.addEventListener('click', () => {
     resetGame()
   })
-  aiDelay(1000).then(beginNextTurn())
+  delay(1000).then(beginNextTurn())
 }
 
 function placePlayerTwoShips(player) {
   if (player.getPlayerType() === 'human') dom.hideShips(player.getBoardName())
   umpire.switchPlayers()
   announcer.announcePlacingShips(umpire.getCurrentPlayer().getPlayerName())
-  aiDelay(1000)
+  delay(1000)
   startNextPlacement()
 }
 
@@ -171,17 +171,19 @@ async function placeTarget(cell) {
   const turnOutcome = umpire.checkHit(cell, shipPositions)
   // Change the color of the chosen cell based on the turn outcome and add the move to the players
   // move list
-  announcer.announceTurnOutcome(player, turnOutcome)
   dom.placeTakenTurn(cell, turnOutcome)
   player.addMove(cell)
   if (turnOutcome) checkHitOutcome(cell)
+  announcer.announceTurnOutcome(player.getPlayerName(), turnOutcome)
+  await delay(1000)
   if (umpire.checkVictoryConditions()) {
     announcer.announceWin(
       player.getPlayerName(),
       opponent.getPlayerName(),
     )
   } else {
-    aiDelay(1000).then(umpire.switchPlayers()).then(beginNextTurn())
+    umpire.switchPlayers()
+    beginNextTurn()
   }
 }
 
