@@ -10,17 +10,8 @@ const utilities = (() => {
     return cellArray
   }
 
-  function aiTimeout(playerType, func) {
-    let timeout = func
-    if (playerType === 'ai') {
-      timeout = setTimeout(func, 1000)
-    }
-    return timeout
-  }
-
   return {
     createCellArray,
-    aiTimeout,
   }
 })()
 
